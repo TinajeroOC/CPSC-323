@@ -5,6 +5,7 @@
 #include <queue>
 #include <string>
 #include <sstream>
+#include <regex>
 
 // RAT23S : Keywords
 const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
