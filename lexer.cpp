@@ -8,9 +8,24 @@ Lexer::~Lexer() {
     
 }
 
-void Lexer::tokenize(std::ifstream input_file, std::queue<Token> tokens) {
-    std::ifstream fin(std::ifstream input_file);
+void Lexer::tokenize(std::ifstream input_file) {
+    bool isComment = false;
+    std::string token;
+    std::string nextLine;
     
+    while (std::getline(input_file, nextLine))
+    {
+        std::queue<Token> empty;
+        std::swap(tokens, empty);
+        std::stringstream checker(nextLine);
+        while (checker >> token)
+        {
+            for (int i = 0; i < tokens.size(); i++)
+            {
+                if (tokens.())
+            }
+        }
+    }
 }
 
 // 

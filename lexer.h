@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <queue>
 #include <string>
+#include <sstream>
 
 // RAT23S : Keywords
 const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
@@ -33,7 +34,7 @@ class Lexer {
     public:
         Lexer();
         ~Lexer();
-        void tokenize(std::ifstream input_file, std::queue<Token> tokens);
+        void tokenize(std::ifstream input_file);
         bool validate_tokens();
         bool is_identifier();
         bool is_integer(std::string checkString);
@@ -43,5 +44,4 @@ class Lexer {
         bool is_separator(std::string lexeme);
     private:
         std::queue<Token> tokens;
-
 };
