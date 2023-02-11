@@ -32,7 +32,7 @@ class Lexer {
     public:
         Lexer();
         ~Lexer();
-        void tokenize();
+        void tokenize(std::ifstream input_file, std::queue<Token> tokens);
         bool validate_tokens();
         bool is_identifier();
         bool is_integer();

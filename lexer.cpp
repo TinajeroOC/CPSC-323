@@ -8,7 +8,8 @@ Lexer::~Lexer() {
     
 }
 
-void Lexer::tokenize() {
+void Lexer::tokenize(std::ifstream input_file, std::queue<Token> tokens) {
+    std::ifstream fin(std::ifstream input_file);
     
 }
 
@@ -27,6 +28,7 @@ bool Lexer::is_real() {
 bool Lexer::is_integer() {
     return true;
 }
+
 // Checks if the keyword given is part of the list of keywords
 bool Lexer::is_keyword(std::string lexeme) {
     bool exists = false;
