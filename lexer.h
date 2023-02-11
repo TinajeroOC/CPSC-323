@@ -35,11 +35,12 @@ class Lexer {
         void tokenize();
         bool validate_tokens();
         bool is_identifier();
-        bool is_integer();
+        bool is_integer(std::string checkString);
         bool is_real();
         bool is_keyword(std::string lexeme);
         bool is_operator(std::string lexeme);
         bool is_separator(std::string lexeme);
     private:
         std::queue<Token> tokens;
+
 };
