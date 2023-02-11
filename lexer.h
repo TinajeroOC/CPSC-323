@@ -6,7 +6,7 @@
 #include <string>
 
 // RAT23S : Keywords
-const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function"};
+const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
 
 // RAT23S : Operators
 const std::unordered_set<std::string> operators = {"==", "!=", ">", "<", "<=", "=>", "*", "/", "+", "-"};
@@ -37,6 +37,9 @@ class Lexer {
         bool is_identifier();
         bool is_integer();
         bool is_real();
+        bool is_keyword(std::string lexeme);
+        bool is_operator(std::string lexeme);
+        bool is_separator(std::string lexeme);
     private:
         std::queue<Token> tokens;
 };
