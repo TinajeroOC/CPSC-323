@@ -21,6 +21,7 @@ enum TokenType {
     KEYWORD,
     OPERATOR,
     SEPARATOR,
+    COMMENT,
 };
 
 struct Token {
