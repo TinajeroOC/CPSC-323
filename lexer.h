@@ -23,7 +23,6 @@ enum TokenType {
     KEYWORD,
     OPERATOR,
     SEPARATOR,
-    COMMENT,
 };
 
 struct Token {
@@ -45,4 +44,9 @@ class Lexer {
         bool is_separator(std::string lexeme);
     private:
         std::queue<Token> tokens;
+        int intFSM[2][2] = {
+            {0, 1},
+            {1, 1}
+        };
+        
 };

@@ -1,5 +1,4 @@
 #include "lexer.h"
-
 Lexer::Lexer() {
     
 }
@@ -72,7 +71,40 @@ bool Lexer::is_real() {
 
 // Using FSM to determine if the string inputted is an integer or not.
 // If the input is an integer, returns true. Else, return false.
+
 bool Lexer::is_integer(std::string checkString) {
+    int state = 0;
+    int accept[1] = {1};
+
+    for (int i = 0; i < checkString.length(); i++)
+    {
+        if (isdigit(checkString[i]))
+        {
+            if (checkString[i] == '0')
+            {
+                state = 0;
+            }
+            else
+            {
+                state = 1;
+            }
+        }
+        switch(state)
+        {
+            case 0:
+                return false;
+            case 1:
+                if (i > 0)
+            {
+                return false;
+            }
+            else if (checkString.length() < 2)
+            {
+                return false;
+            }
+        }
+    }
+    /*  is_integer WITHOUT FSM
     bool isInteger = false;
     int checkSign = 0;
 
@@ -114,6 +146,7 @@ bool Lexer::is_integer(std::string checkString) {
 
     
     return isInteger;
+    */
 }
 
 // Checks if the keyword given is part of the list of keywords
