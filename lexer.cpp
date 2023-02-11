@@ -12,17 +12,39 @@ void Lexer::tokenize(std::ifstream input_file) {
     bool isComment = false;
     std::string token;
     std::string nextLine;
-    
+    std::regex iden("[A-Za-z] [A-Za-z0-9_]*");
+    std::regex real("[-]* [0-9]+\\.[0-9]+]");
+    std::regex integer("[-]* [0-9]+");
     while (std::getline(input_file, nextLine))
     {
-        std::queue<Token> empty;
-        std::swap(tokens, empty);
         std::stringstream checker(nextLine);
         while (checker >> token)
         {
             for (int i = 0; i < tokens.size(); i++)
             {
-                if (tokens.())
+                if (token.find("[*") == -1 && isComment != true)
+                {
+                    if (regex_match(token, iden))
+                    {
+                        Token::type = "identifier";
+                    }
+                    if (regex_match(token, real))
+                    {
+                        Token::type = "real";
+                    }
+                    if (regex_match(token, integer))
+                    {
+                        Token::type = "integer";
+                    }
+                }
+                else
+                {
+                    isComment = true;
+                    if (token.find("*]") != -1)
+                    {
+                        isComment = false;
+                    }
+                }
             }
         }
     }
