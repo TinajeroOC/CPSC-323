@@ -74,12 +74,20 @@ bool Lexer::is_integer(std::string checkString) {
             case 1:
                 if (i > 0)
             {
-                return false;
+                state = 0;
             }
             else if (checkString.length() < 2)
             {
-                return false;
+                state = 0;
             }
+        }
+
+        switch (state)
+        {
+            case 0:
+                return false;
+            case 1:
+                return true;
         }
     }
     /*  is_integer WITHOUT FSM
