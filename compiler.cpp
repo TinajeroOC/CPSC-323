@@ -54,6 +54,20 @@ int main() {
     
     cout << "Results file: " << output_file_name << endl;
     
+    // is_integer function
+    string testInt;
+    cout << "Input an integer please." << endl;
+    cin >> testInt;
+    if (lex.is_integer(testInt))
+    {
+        cout << "Valid integer.";
+    }
+    else
+    {
+        cout << "Invalid integer.";
+    }
+
+
     return 0;
 }
 
@@ -86,3 +100,4 @@ string create_timestamp() {
     
     return file_name;
 }
+

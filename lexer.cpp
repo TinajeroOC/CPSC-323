@@ -1,4 +1,6 @@
 #include "lexer.h"
+#include <iostream>
+
 Lexer::Lexer() {
     checkSign = 'a';
 }
@@ -88,49 +90,56 @@ int Lexer::signsAndPeriod(char checkSign)
 
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
-
-    for (int i = 0; i < checkString.length(); i++)
+    int check;
+    check = checkString.size();
+    for (int i = 0; i < check; i++)
     {
-        state = intFSM[state][1];
+        int column = signsAndPeriod(checkString[i]);
+        
         if (isdigit(checkString[i]))
         {
-            if (checkString[i] == '+')
-            {
-                state = 1;
-            }
-            else if (checkString[i] == '-')
-            {
-                state = 1;
-            }
-            else
-            {
-                state = 1;
-            }
+            state = 1;
         }
-            
-            switch (state)
-            {
-            case 0:
-                return false;
-            case 1:
-                if (i > 0)
-                {
-                    state = 0;
-                }
-                else if (checkString.length() < 2)
-                {
-                    state = 0;
-                }
-            }
+        else if (checkString[i] == '+')
+        {
+            state = 1;
+        }
+        else if (checkString[i] == '-')
+        {
+            state = 1;
+        }
+        else
+        {
+            state = 0;
+        }
 
-        switch (state)
+        switch(state)
         {
             case 0:
                 return false;
             case 1:
-                return true;
+                if(i > 0 && checkString[i] == '+')
+                {
+                    return false;
+                }
+                if(i > 0 && checkString[i] == '-')
+                {
+                    return false;
+                }
+                state = intFSM[state][column];
         }
+        
     }
+    switch (state)
+    {
+        // If FSM is in state 0 it's not in accepting state so return false.
+        case 0:
+            return false;
+        // If FSM is in state 1 it's an accepting state so return true.
+        case 1:
+            return true;
+    }
+    return true;
 }
 
 // Checks if the keyword given is part of the list of keywords
