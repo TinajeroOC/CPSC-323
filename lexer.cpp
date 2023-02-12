@@ -1,6 +1,6 @@
 #include "lexer.h"
 Lexer::Lexer() {
-    
+    checkSign = 'a';
 }
 
 Lexer::~Lexer() {
@@ -72,37 +72,72 @@ bool Lexer::is_real() {
 // Using FSM to determine if the string inputted is an integer or not.
 // If the input is an integer, returns true. Else, return false.
 
+int Lexer::signsAndPeriod(char checkSign)
+{
+    int checkSigns = 0;
+    if (isdigit(checkSign))
+    {
+        checkSigns = 1;
+    }
+    else if (checkSign == '.')
+    {
+        checkSigns = 2;
+    }
+    else if (checkSigns == '+')
+    {
+        checkSigns = 3;
+    }
+    else if (checkSigns == '-')
+    {
+        checkSigns = 4;
+    }
+    else if (isalpha(checkSign))
+    {
+        checkSigns = 5;
+    }
+    else
+    {
+        checkSigns = 6;
+    }
+    return checkSigns;
+}
+
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
-    int accept[1] = {1};
 
     for (int i = 0; i < checkString.length(); i++)
     {
+        state = intFSM[state][1];
         if (isdigit(checkString[i]))
         {
-            if (checkString[i] == '0')
+            if (checkString[i] == '+')
             {
-                state = 0;
+                state = 1;
+            }
+            else if (checkString[i] == '-')
+            {
+                state = 1;
             }
             else
             {
                 state = 1;
             }
         }
-        switch(state)
-        {
+            
+            switch (state)
+            {
             case 0:
                 return false;
             case 1:
                 if (i > 0)
-            {
-                state = 0;
+                {
+                    state = 0;
+                }
+                else if (checkString.length() < 2)
+                {
+                    state = 0;
+                }
             }
-            else if (checkString.length() < 2)
-            {
-                state = 0;
-            }
-        }
 
         switch (state)
         {
@@ -112,49 +147,7 @@ bool Lexer::is_integer(std::string checkString) {
                 return true;
         }
     }
-    /*  is_integer WITHOUT FSM
-    bool isInteger = false;
-    int checkSign = 0;
-
-    if (checkString.length() == 0)
-    {
-        return false;
-    }
-    for (int i = 0; i < checkString.length(); i++)
-    {
-        // Checks the signs of integer since -10 and +10 are integers.
-        if (checkString[i] == '-' || checkString[i] == '+')
-        {
-            checkSign = 1;
-        }
-
-        switch(checkSign)
-        {
-            case 0:
-            if (isdigit(checkString[i]))
-            {
-                isInteger = true;
-            }
-            else
-            {
-                return false;
-            }
-
-            case 1:
-            if (i > 0)
-            {
-                return false;
-            }
-            else if (checkString.length() < 2)
-            {
-                return false;
-            }
-        }
-    }
-
     
-    return isInteger;
-    */
 }
 
 // Checks if the keyword given is part of the list of keywords
