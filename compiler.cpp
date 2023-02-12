@@ -8,6 +8,7 @@ using namespace std;
 
 bool has_file_extension(const string &file_name, const string &file_type);
 string create_timestamp();
+Lexer lex;
 
 int main() {
     ifstream input_file;
@@ -31,7 +32,7 @@ int main() {
         cout << "There was an error opening the file." << endl;
         exit(-1);
     }
-    
+    lex.tokenize(input_file);
     cout << "Creating the results file..." << endl;
     output_file_name = create_timestamp();
     output_file_name.append(".txt");

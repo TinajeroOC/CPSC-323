@@ -7,42 +7,25 @@ Lexer::~Lexer() {
     
 }
 
-void Lexer::tokenize(std::ifstream input_file) {
+void Lexer::tokenize(std::ifstream& input_file) {
     bool isComment = false;
     std::string token;
     std::string nextLine;
-    std::regex iden("[A-Za-z] [A-Za-z0-9_]*");
-    std::regex real("[-]* [0-9]+\\.[0-9]+]");
-    std::regex integer("[-]* [0-9]+");
     while (std::getline(input_file, nextLine))
     {
         std::stringstream checker(nextLine);
         while (checker >> token)
         {
-            for (int i = 0; i < tokens.size(); i++)
+            if (token.find("[*") != std::string::npos && isComment != true)
             {
-                if (token.find("[*") == -1 && isComment != true)
+                std::cout << token;
+            }
+            else
+            {
+                isComment = true;
+                if (token.find("*]") != std::string::npos)
                 {
-                    if (regex_match(token, iden))
-                    {
-                        Token::type = "identifier";
-                    }
-                    if (regex_match(token, real))
-                    {
-                        Token::type = "real";
-                    }
-                    if (regex_match(token, integer))
-                    {
-                        Token::type = "integer";
-                    }
-                }
-                else
-                {
-                    isComment = true;
-                    if (token.find("*]") != -1)
-                    {
-                        isComment = false;
-                    }
+                    isComment = false;
                 }
             }
         }
@@ -62,7 +45,7 @@ bool Lexer::is_identifier() {
     
     
 
-    return true;
+    return exists;
 }
 
 bool Lexer::is_real() {    
@@ -75,8 +58,7 @@ bool Lexer::is_real() {
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
     int accept[1] = {1};
-
-    for (int i = 0; i < checkString.length(); i++)
+    for (std::size_t i = 0; i < checkString.length(); i++)
     {
         if (isdigit(checkString[i]))
         {
@@ -155,6 +137,7 @@ bool Lexer::is_integer(std::string checkString) {
     
     return isInteger;
     */
+   return accept[0];
 }
 
 // Checks if the keyword given is part of the list of keywords
