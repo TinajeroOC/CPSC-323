@@ -16,9 +16,10 @@ void Lexer::tokenize(std::ifstream& input_file) {
         std::stringstream checker(nextLine);
         while (checker >> token)
         {
-            if (token.find("[*") != std::string::npos && isComment != true)
+            if (token.find("[*") == std::string::npos && isComment != true)
             {
                 std::cout << token;
+                std::cout << std::endl;
             }
             else
             {
