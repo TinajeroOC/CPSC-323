@@ -34,7 +34,7 @@ class Lexer {
     public:
         Lexer();
         ~Lexer();
-        void tokenize(std::ifstream input_file);
+        void tokenize(std::ifstream& input_file);
         bool validate_tokens();
         bool is_identifier();
         bool is_integer(std::string checkString);

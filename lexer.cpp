@@ -7,42 +7,26 @@ Lexer::~Lexer() {
     
 }
 
-void Lexer::tokenize(std::ifstream input_file) {
+void Lexer::tokenize(std::ifstream& input_file) {
     bool isComment = false;
     std::string token;
     std::string nextLine;
-    std::regex iden("[A-Za-z] [A-Za-z0-9_]*");
-    std::regex real("[-]* [0-9]+\\.[0-9]+]");
-    std::regex integer("[-]* [0-9]+");
     while (std::getline(input_file, nextLine))
     {
         std::stringstream checker(nextLine);
         while (checker >> token)
         {
-            for (int i = 0; i < tokens.size(); i++)
+            if (token.find("[*") == std::string::npos && isComment != true)
             {
-                if (token.find("[*") == -1 && isComment != true)
+                std::cout << token;
+                std::cout << std::endl;
+            }
+            else
+            {
+                isComment = true;
+                if (token.find("*]") != std::string::npos)
                 {
-                    if (regex_match(token, iden))
-                    {
-                        Token::type = "identifier";
-                    }
-                    if (regex_match(token, real))
-                    {
-                        Token::type = "real";
-                    }
-                    if (regex_match(token, integer))
-                    {
-                        Token::type = "integer";
-                    }
-                }
-                else
-                {
-                    isComment = true;
-                    if (token.find("*]") != -1)
-                    {
-                        isComment = false;
-                    }
+                    isComment = false;
                 }
             }
         }
@@ -62,7 +46,7 @@ bool Lexer::is_identifier() {
     
     
 
-    return true;
+    return exists;
 }
 
 bool Lexer::is_real() {    
@@ -147,7 +131,6 @@ bool Lexer::is_integer(std::string checkString) {
                 return true;
         }
     }
-    
 }
 
 // Checks if the keyword given is part of the list of keywords
