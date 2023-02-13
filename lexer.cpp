@@ -11,6 +11,8 @@ void Lexer::tokenize(std::ifstream& input_file) {
     bool isComment = false;
     std::string token;
     std::string nextLine;
+    std::string separatorHold;
+    std::size_t index = 0;
     while (std::getline(input_file, nextLine))
     {
         std::stringstream checker(nextLine);
@@ -18,11 +20,17 @@ void Lexer::tokenize(std::ifstream& input_file) {
         {
             if (token.find("[*") == std::string::npos && isComment != true)
             {
-                std::cout << token;
-                std::cout << std::endl;
+                while (is_separator(token, index))
+                {
+                    separatorHold = token.substr(index, 1);
+                    token.erase(index, 1);
+                    //Need to fix, it will go through all separators first.
+                    //Need to store separatorHold as a separator token here.
+                }
+                std::cout << token << std::endl;
             }
             else
-            {
+            { 
                 isComment = true;
                 if (token.find("*]") != std::string::npos)
                 {
@@ -162,12 +170,16 @@ bool Lexer::is_operator(std::string lexeme) {
     return exists;
 }
 
-bool Lexer::is_separator(std::string lexeme) {
+bool Lexer::is_separator(std::string lexeme, std::size_t& index) {
     bool exists = false;
-    std::unordered_set<std::string>::const_iterator finder = separators.find(lexeme);
-    if (finder == separators.end())
+    for (const auto& c : separators)
     {
-        exists = true;
+        index = lexeme.find(c);
+        if (index != std::string::npos)
+        {
+            exists = true;
+            break;
+        }
     }
     return exists;
 }
