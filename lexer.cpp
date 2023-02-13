@@ -75,56 +75,59 @@ int Lexer::signsAndPeriod(char checkSign)
     }
     else if (checkSign == '.')
     {
-        checkSigns = 2;
+        checkSigns = 1;
     }
     else if (checkSigns == '+')
     {
-        checkSigns = 3;
+        checkSigns = 1;
     }
     else if (checkSigns == '-')
     {
-        checkSigns = 4;
+        checkSigns = 1;
     }
     else if (isalpha(checkSign))
     {
-        checkSigns = 5;
-    }
-    else
-    {
-        checkSigns = 6;
+        checkSigns = 0;
     }
     return checkSigns;
 }
 
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
+    int count = 0;
     int check;
     check = checkString.size();
     for (int i = 0; i < check; i++)
     {
         int column = signsAndPeriod(checkString[i]);
         
+
         if (isdigit(checkString[i]))
         {
+            count++;
             state = 1;
         }
         else if (checkString[i] == '+')
         {
-            state = 1;
+            state = 2;
         }
         else if (checkString[i] == '-')
         {
-            state = 1;
+            state = 2;
         }
         else
         {
             state = 0;
+            break;
         }
 
         switch(state)
         {
             case 0:
-                return false;
+                state = 0;
+                std::cout << state;
+                std::cout << column;
+                break;
             case 1:
                 if(i > 0 && checkString[i] == '+')
                 {
@@ -135,9 +138,28 @@ bool Lexer::is_integer(std::string checkString) {
                     return false;
                 }
                 state = intFSM[state][column];
+            
+            case 2:
+            
+                if(i > 0 && checkString[i] == '+')
+                {
+                    return false;
+                }
+                if(i > 0 && checkString[i] == '-')
+                {
+                    
+                    return false;
+                }
+                
         }
-        
+                
     }
+
+    if (count < 1)
+    {
+        return false;
+    }
+    
     switch (state)
     {
         // If FSM is in state 0 it's not in accepting state so return false.
