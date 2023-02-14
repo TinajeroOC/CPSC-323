@@ -111,27 +111,19 @@ bool Lexer::is_real() {
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
     int check;
+    int column = 0;
     check = checkString.size();
     for (int i = 0; i < check; i++)
     {
-        int column = 0;
-        
         if (isdigit(checkString[i]))
         {
-            state = 1;
+            column = 1;
         }
         else
         {
-            state = 0;
+            column = 0;
         }
-
-        switch(state)
-        {
-            case 0:
-                return false;
-            case 1:
-                state = intFSM[state][column];
-        }
+        state = intFSM[state][column];
     }
     switch (state)
     {

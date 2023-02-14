@@ -61,6 +61,20 @@ int main() {
     cout << lex.is_identifier("5shAn31_") << endl;
     cout << lex.is_identifier("A&sna2") << endl;
 
+    /* Temporary code to test is_integer function.
+    string testInt;
+    cout << "Input an integer please." << endl;
+    cin >> testInt;
+    if (lex.is_integer(testInt))
+    {
+        cout << "Valid integer.";
+    }
+    else
+    {
+        cout << "Invalid integer.";
+    }
+    */
+   
     return 0;
 }
 

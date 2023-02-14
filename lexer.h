@@ -49,7 +49,7 @@ class Lexer {
         char checkSign;
         int intFSM[2][2] = {
             {0, 1},
-            {1, 2}
+            {0, 1}
         };
         int realFSM[4][3] = {
             {0, 1, 2},
