@@ -46,6 +46,25 @@ class Lexer {
         bool is_separator(const std::string &lexeme);
     private:
         std::queue<Token> tokens;
+
+        /*
+        * State-Transition Table
+        *
+        * Q = {0, 1, 2} : States
+        * F = {2} : Accepting States
+        *
+        * S | {a-Z} | {0-9} | {_}
+        * ------------------------
+        * 0 | 2     | 1     | 1
+        * 1 | 1     | 1     | 1
+        * 2 | 2     | 2     | 2
+        * 
+        */
+        int identifierFSM[3][3] = {
+            {2, 1, 1},
+            {1, 1, 1},
+            {2, 2, 2}
+        };
         
         /*
         * State-Transition Table
@@ -77,7 +96,7 @@ class Lexer {
         * 0 | 1   | 2     | 1
         * 1 | 1   | 1     | 1 
         * 2 | 2   | 2     | 3
-        * 3 | 1   | 4     | 1
+        * 3 | 4   | 4     | 1
         * 4 | 4   | 4     | 4
         *
         */
@@ -85,26 +104,7 @@ class Lexer {
             {1, 2, 1},
             {1, 1, 1},
             {2, 2, 3},
-            {1, 4, 1},
+            {4, 4, 1},
             {4, 4, 4}
-        };
-
-        /*
-        * State-Transition Table
-        *
-        * Q = {0, 1, 2} : States
-        * F = {2} : Accepting States
-        *
-        * S | {a-Z} | {0-9} | {_}
-        * ------------------------
-        * 0 | 2     | 1     | 1
-        * 1 | 1     | 1     | 1
-        * 2 | 2     | 2     | 2
-        * 
-        */
-        int identifierFSM[3][3] = {
-            {2, 1, 1},
-            {1, 1, 1},
-            {2, 2, 2}
         };
 };
