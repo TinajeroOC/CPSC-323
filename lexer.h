@@ -42,7 +42,7 @@ class Lexer {
         bool is_real();
         bool is_keyword(std::string lexeme);
         bool is_operator(std::string lexeme);
-        bool is_separator(std::string lexeme, std::size_t& index);
+        bool is_separator(std::string lexeme);
         int signsAndPeriod(char checkSign);
     private:
         std::queue<Token> tokens;

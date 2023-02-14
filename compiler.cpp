@@ -32,6 +32,7 @@ int main() {
         cout << "There was an error opening the file." << endl;
         exit(-1);
     }
+    
     lex.tokenize(input_file);
     cout << "Creating the results file..." << endl;
     output_file_name = create_timestamp();
@@ -54,6 +55,7 @@ int main() {
     
     cout << "Results file: " << output_file_name << endl;
     
+    
     // is_integer function
     string testInt;
     cout << "Input an integer please." << endl;
@@ -66,7 +68,6 @@ int main() {
     {
         cout << "Invalid integer.";
     }
-
 
     return 0;
 }

@@ -13,8 +13,6 @@ void Lexer::tokenize(std::ifstream& input_file) {
     bool isComment = false;
     std::string token;
     std::string nextLine;
-    std::string separatorHold;
-    std::size_t index = 0;
     while (std::getline(input_file, nextLine))
     {
         std::stringstream checker(nextLine);
@@ -22,17 +20,11 @@ void Lexer::tokenize(std::ifstream& input_file) {
         {
             if (token.find("[*") == std::string::npos && isComment != true)
             {
-                while (is_separator(token, index))
-                {
-                    separatorHold = token.substr(index, 1);
-                    token.erase(index, 1);
-                    //Need to fix, it will go through all separators first.
-                    //Need to store separatorHold as a separator token here.
-                }
-                std::cout << token << std::endl;
+                std::cout << token;
+                std::cout << std::endl;
             }
             else
-            { 
+            {
                 isComment = true;
                 if (token.find("*]") != std::string::npos)
                 {
@@ -60,106 +52,37 @@ bool Lexer::is_identifier() {
 }
 
 bool Lexer::is_real() {    
+    
     return true;
 }
 
 // Using FSM to determine if the string inputted is an integer or not.
 // If the input is an integer, returns true. Else, return false.
-
-int Lexer::signsAndPeriod(char checkSign)
-{
-    int checkSigns = 0;
-    if (isdigit(checkSign))
-    {
-        checkSigns = 1;
-    }
-    else if (checkSign == '.')
-    {
-        checkSigns = 1;
-    }
-    else if (checkSigns == '+')
-    {
-        checkSigns = 1;
-    }
-    else if (checkSigns == '-')
-    {
-        checkSigns = 1;
-    }
-    else if (isalpha(checkSign))
-    {
-        checkSigns = 0;
-    }
-    return checkSigns;
-}
-
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
-    int count = 0;
     int check;
     check = checkString.size();
     for (int i = 0; i < check; i++)
     {
-        int column = signsAndPeriod(checkString[i]);
+        int column = 0;
         
-
         if (isdigit(checkString[i]))
         {
-            count++;
             state = 1;
-        }
-        else if (checkString[i] == '+')
-        {
-            state = 2;
-        }
-        else if (checkString[i] == '-')
-        {
-            state = 2;
         }
         else
         {
             state = 0;
-            break;
         }
 
         switch(state)
         {
             case 0:
-                state = 0;
-                std::cout << state;
-                std::cout << column;
-                break;
+                return false;
             case 1:
-                if(i > 0 && checkString[i] == '+')
-                {
-                    return false;
-                }
-                if(i > 0 && checkString[i] == '-')
-                {
-                    return false;
-                }
                 state = intFSM[state][column];
-            
-            case 2:
-            
-                if(i > 0 && checkString[i] == '+')
-                {
-                    return false;
-                }
-                if(i > 0 && checkString[i] == '-')
-                {
-                    
-                    return false;
-                }
-                
         }
-                
     }
-
-    if (count < 1)
-    {
-        return false;
-    }
-    
     switch (state)
     {
         // If FSM is in state 0 it's not in accepting state so return false.
@@ -193,16 +116,12 @@ bool Lexer::is_operator(std::string lexeme) {
     return exists;
 }
 
-bool Lexer::is_separator(std::string lexeme, std::size_t& index) {
+bool Lexer::is_separator(std::string lexeme) {
     bool exists = false;
-    for (const auto& c : separators)
+    std::unordered_set<std::string>::const_iterator finder = separators.find(lexeme);
+    if (finder == separators.end())
     {
-        index = lexeme.find(c);
-        if (index != std::string::npos)
-        {
-            exists = true;
-            break;
-        }
+        exists = true;
     }
     return exists;
 }
