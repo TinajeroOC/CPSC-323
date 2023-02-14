@@ -13,6 +13,7 @@ void Lexer::tokenize(std::ifstream &input_file) {
     std::string word;
     std::string nextLine;
     std::string tokenHolder;
+    std::string prevToken;
     int wordSize = 0;
     while (std::getline(input_file, nextLine))
     {
@@ -26,28 +27,100 @@ void Lexer::tokenize(std::ifstream &input_file) {
                 {
                     if (is_separator(std::string(1, word[i])))
                     {
-                        std::cout << "Separator: " << std::string(1, word[i]) << std::endl;
-                        Token token = {SEPARATOR, std::string(1, word[i])};
+                        if (prevToken == "")
+                        {
+                            std::cout << "Separator: " << std::string(1, word[i]) << std::endl;
+                            Token token = {SEPARATOR, std::string(1, word[i])};
+                            tokens.push(token);
+                        }
+                        else
+                        {
+                            if (is_operator(std::string(prevToken)))
+                            {
+                                std::cout << "Operator: " << prevToken << std::endl;
+                                Token token = {SEPARATOR, prevToken};
+                                tokens.push(token);
+                            }
+                            if (is_identifier(std::string(prevToken)))
+                            {
+                                if (is_keyword(std::string(prevToken)))
+                                {
+                                    std::cout << "Keyword: " << prevToken << std::endl;
+                                    Token token = {KEYWORD, prevToken};
+                                    tokens.push(token);
+                                }
+                                else
+                                {
+                                    std::cout << "Identifier: " << prevToken << std::endl;
+                                    Token token = {IDENTIFIER, prevToken};
+                                    tokens.push(token);
+                                }
+                            }
+                            if (is_integer(std::string(prevToken)))
+                            {
+                                std::cout << "Integer: " << prevToken << std::endl;
+                                Token token = {INTEGER, prevToken};
+                                tokens.push(token);
+                            }
+                            if (is_real(std::string(prevToken)))
+                            {
+                                std::cout << "Real: " << prevToken << std::endl;
+                                Token token = {REAL, prevToken};
+                                tokens.push(token);
+                            }
+                            if (is_separator(std::string(1, word[i])))
+                            {
+                                std::cout << "Separator: " << std::string(1, word[i]) << std::endl;
+                                Token token = {SEPARATOR, std::string(1, word[i])};
+                                tokens.push(token);
+                            }
+                        }
+                        prevToken = "";
+                        tokenHolder = "";
                     }
                     else
                     {
                         tokenHolder += std::string(1, word[i]);
+                        prevToken = tokenHolder;
                         if (i == wordSize-1)
                         {
                             if (is_operator(std::string(tokenHolder)))
                             {
                                 std::cout << "Operator: " << tokenHolder << std::endl;
                                 Token token = {SEPARATOR, tokenHolder};
+                                tokens.push(token);
                             }
-                            if (is_keyword(std::string(tokenHolder)))
+                            if (is_identifier(std::string(prevToken)))
                             {
-                                std::cout << "Keyword: " << tokenHolder << std::endl;
-                                Token token = {KEYWORD, tokenHolder};
+                                if (is_keyword(std::string(prevToken)))
+                                {
+                                    std::cout << "Keyword: " << prevToken << std::endl;
+                                    Token token = {KEYWORD, prevToken};
+                                    tokens.push(token);
+                                }
+                                else
+                                {
+                                    std::cout << "Identifier: " << prevToken << std::endl;
+                                    Token token = {IDENTIFIER, prevToken};
+                                    tokens.push(token);
+                                }
                             }
-                            tokenHolder = "";
+                            if (is_integer(std::string(tokenHolder)))
+                            {
+                                std::cout << "Integer: " << tokenHolder << std::endl;
+                                Token token = {INTEGER, tokenHolder};
+                                tokens.push(token);
+                            }
+                            if (is_real(std::string(tokenHolder)))
+                            {
+                                std::cout << "Real: " << tokenHolder << std::endl;
+                                Token token = {REAL, tokenHolder};
+                                tokens.push(token);
+                            }
                         }
                     }
                 }
+                prevToken = "";
                 tokenHolder = "";
             }
             else
