@@ -8,20 +8,20 @@ using namespace std;
 
 bool has_file_extension(const string &file_name, const string &file_type);
 string create_timestamp();
-Lexer lex;
 
 int main() {
+    Lexer lexer;
     ifstream input_file;
     ofstream output_file;
     string input_file_name, input_file_path = "tests/";
     string output_file_name, output_file_path = "results/";
-    
+
     cout << "Input the file name: ";
     cin >> input_file_name;
     
     cout << "Verifying the file name..." << endl;
     if (!has_file_extension(input_file_name, "txt")) {
-        cout << "File does not have the txt extension." << endl;
+        cout << "Error: File does not have the txt extension." << endl;
         exit(-1);
     }
     
@@ -29,57 +29,30 @@ int main() {
     input_file_path.append(input_file_name);
     input_file.open(input_file_path);
     if (!input_file.is_open()) {
-        cout << "There was an error opening the file." << endl;
+        cout << "Error: File could not be opened." << endl;
         exit(-1);
     }
+
+    cout << "Tokenizing the file..." << endl;
+    lexer.tokenize(input_file);
     
-    cout << "Creating the results file..." << endl;
+    cout << "Opening the results file..." << endl;
     output_file_name = create_timestamp();
     output_file_name.append(".txt");
     output_file_path.append(output_file_name);
     output_file.open(output_file_path);
     if (!output_file.is_open()) {
-        cout << "There was an error creating and opening the results file." << endl;
+        cout << "Error: Results file could not be opened." << endl;
         exit(-1);
     }
-
-    // Temporary code to test the tokenize() function.
-    lex.tokenize(input_file);
     
-    // Temporary code to test reading and writing files.
     cout << "Writing to the results file..." << endl;
-    string line;
-    while (getline(input_file, line)) {
-        output_file << line;
-    }
-    output_file.close();
-    input_file.close();
+    lexer.results(output_file);
     
     cout << "Results file: " << output_file_name << endl;
 
-    // Printing out results
-    lex.results(output_file);
-
-    // Temporary code to test is_identifier FSM.
-    cout << "DEBUG IS_IDENTIFIER()" << endl;
-    cout << lex.is_identifier("As514127_") << endl;
-    cout << lex.is_identifier("v812_1ajhs") << endl;
-    cout << lex.is_identifier("5shAn31_") << endl;
-    cout << lex.is_identifier("A&sna2") << endl;
-
-    // Temporary code to test is_integer FSM.
-    cout << "DEBUG IS_INTEGER()" << endl;
-    cout << lex.is_integer("199278172") << endl;
-    cout << lex.is_integer("012381221") << endl;
-    cout << lex.is_integer("612cnas12") << endl;
-    cout << lex.is_integer("667810%05") << endl;
-
-    // Temporary code to test is_real FSM.
-    cout << "DEBUG IS_REAL()" << endl;
-    cout << lex.is_real("199278172.128212") << endl;
-    cout << lex.is_real("528581231.058212") << endl;
-    cout << lex.is_real("012381221.128621") << endl;
-    cout << lex.is_real("018636623.024812") << endl;
+    output_file.close();
+    input_file.close();
     
     return 0;
 }

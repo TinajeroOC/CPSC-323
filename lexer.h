@@ -1,14 +1,12 @@
 #pragma once
-#include <cctype>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <unordered_set>
-#include <queue>
 #include <string>
 #include <sstream>
-#include <regex>
 #include <algorithm>
-#include <iomanip>
 
 // RAT23S : Keywords
 const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
@@ -19,6 +17,7 @@ const std::unordered_set<std::string> operators = {"==", "!=", ">", "<", "<=", "
 // RAT23S : Separators
 const std::unordered_set<std::string> separators = {"#", "{", "}", "(", ")", ",", ";"};
 
+// RAT23S : Token Types
 enum TokenType {
     IDENTIFIER,
     INTEGER,
@@ -45,9 +44,9 @@ class Lexer {
         bool is_keyword(const std::string &lexeme);
         bool is_operator(const std::string &lexeme);
         bool is_separator(const std::string &lexeme);
-        std::string returnTokenType(TokenType type);
+        std::string token_type_str(const TokenType &type);
     private:
-        std::queue<Token> tokens;
+        std::vector<Token> tokens;
 
         /*
         * State-Transition Table
