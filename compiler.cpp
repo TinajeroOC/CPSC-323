@@ -57,6 +57,9 @@ int main() {
     
     cout << "Results file: " << output_file_name << endl;
 
+    // Printing out results
+    lex.results(output_file);
+
     // Temporary code to test is_identifier FSM.
     cout << "DEBUG IS_IDENTIFIER()" << endl;
     cout << lex.is_identifier("As514127_") << endl;

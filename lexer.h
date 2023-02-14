@@ -8,6 +8,7 @@
 #include <sstream>
 #include <regex>
 #include <algorithm>
+#include <iomanip>
 
 // RAT23S : Keywords
 const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
@@ -44,6 +45,7 @@ class Lexer {
         bool is_keyword(const std::string &lexeme);
         bool is_operator(const std::string &lexeme);
         bool is_separator(const std::string &lexeme);
+        std::string returnTokenType(TokenType type);
     private:
         std::queue<Token> tokens;
 

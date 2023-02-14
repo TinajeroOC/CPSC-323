@@ -136,7 +136,49 @@ void Lexer::tokenize(std::ifstream &input_file) {
 }
 
 void Lexer::results(std::ofstream &output_file) {
-    std::string test = "Test";
+    Token theToken;
+    TokenType passToFunction;
+    int tokensSize;
+    std::string typeOfToken;
+
+    std::cout << "Output:" << std::endl;
+    std::cout << "-------" << std::endl;
+    std::cout << "token" << std::setw(30) << "lexeme" << std::endl;
+    std::cout << "-----------------------------------" << std::endl;
+
+    tokensSize = tokens.size();
+
+    for (int i = 0; i < tokensSize; i++)
+    {
+        theToken = tokens.front();
+        passToFunction = theToken.type;
+        typeOfToken = returnTokenType(passToFunction);
+        std::cout << typeOfToken << std::setw(30) << theToken.lexeme << std::endl;
+        tokens.pop();
+    }
+
+
+}
+
+std::string Lexer::returnTokenType(TokenType type)
+{
+    std::cout << "h";
+    switch (type)
+    {
+        case IDENTIFIER:
+            return "IDENTIFIER";
+        case INTEGER:
+            return "INTEGER";
+        case REAL:
+            return "REAL";
+        case KEYWORD:
+            return "KEYWORD";
+        case OPERATOR:
+            return "OPERATOR";
+        case SEPARATOR:
+            return "SEPARATOR";
+    }
+    return "Invalid";
 }
 
 bool Lexer::is_identifier(const std::string &lexeme) {
