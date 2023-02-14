@@ -47,9 +47,18 @@ class Lexer {
     private:
         std::queue<Token> tokens;
         char checkSign;
+        /*
+        * INT FSM
+        *
+        * S | {a-Z} | {0-9} 
+        * ------------------    /0/ is starting state. 1 is accepting state
+        * 0 |  /0/  | 1
+        * 1 |   1   | 1
+        *
+        */
         int intFSM[2][2] = {
             {0, 1},
-            {0, 1}
+            {1, 1},
         };
         int realFSM[4][3] = {
             {0, 1, 2},
