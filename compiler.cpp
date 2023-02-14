@@ -33,7 +33,6 @@ int main() {
         exit(-1);
     }
     
-    lex.tokenize(input_file);
     cout << "Creating the results file..." << endl;
     output_file_name = create_timestamp();
     output_file_name.append(".txt");
@@ -43,6 +42,9 @@ int main() {
         cout << "There was an error creating and opening the results file." << endl;
         exit(-1);
     }
+
+    // Temporary code to test the tokenize() function.
+    lex.tokenize(input_file);
     
     // Temporary code to test reading and writing files.
     cout << "Writing to the results file..." << endl;
@@ -56,25 +58,26 @@ int main() {
     cout << "Results file: " << output_file_name << endl;
 
     // Temporary code to test is_identifier FSM.
+    cout << "DEBUG IS_IDENTIFIER()" << endl;
     cout << lex.is_identifier("As514127_") << endl;
     cout << lex.is_identifier("v812_1ajhs") << endl;
     cout << lex.is_identifier("5shAn31_") << endl;
     cout << lex.is_identifier("A&sna2") << endl;
 
-    /* Temporary code to test is_integer function.
-    string testInt;
-    cout << "Input an integer please." << endl;
-    cin >> testInt;
-    if (lex.is_integer(testInt))
-    {
-        cout << "Valid integer.";
-    }
-    else
-    {
-        cout << "Invalid integer.";
-    }
-    */
-   
+    // Temporary code to test is_integer FSM.
+    cout << "DEBUG IS_INTEGER()" << endl;
+    cout << lex.is_integer("199278172") << endl;
+    cout << lex.is_integer("012381221") << endl;
+    cout << lex.is_integer("612cnas12") << endl;
+    cout << lex.is_integer("667810%05") << endl;
+
+    // Temporary code to test is_real FSM.
+    cout << "DEBUG IS_REAL()" << endl;
+    cout << lex.is_real("199278172.128212") << endl;
+    cout << lex.is_real("528581231.058212") << endl;
+    cout << lex.is_real("012381221.128621") << endl;
+    cout << lex.is_real("018636623.024812") << endl;
+    
     return 0;
 }
 

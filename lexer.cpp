@@ -1,15 +1,14 @@
 #include "lexer.h"
-#include <iostream>
 
 Lexer::Lexer() {
-    checkSign = 'a';
-}
-
-Lexer::~Lexer() {
     
 }
 
-void Lexer::tokenize(std::ifstream& input_file) {
+Lexer::~Lexer() {
+
+}
+
+void Lexer::tokenize(std::ifstream &input_file) {
     bool isComment = false;
     std::string token;
     std::string nextLine;
@@ -35,46 +34,16 @@ void Lexer::tokenize(std::ifstream& input_file) {
     }
 }
 
-bool Lexer::validate_tokens() {
-    bool valid_token = true;
-
-
-    return valid_token;
-}
-
-int Lexer::signsAndPeriod(char checkSign)
-{
-    int checkSigns = 0;
-    if (isdigit(checkSign))
-    {
-        checkSigns = 1;
-    }
-    else if (checkSign == '.')
-    {
-        checkSigns = 1;
-    }
-    else if (checkSigns == '+')
-    {
-        checkSigns = 1;
-    }
-    else if (checkSigns == '-')
-    {
-        checkSigns = 1;
-    }
-    else if (isalpha(checkSign))
-    {
-        checkSigns = 0;
-    }
-    return checkSigns;
+void Lexer::results(std::ofstream &output_file) {
+    std::string test = "Test";
 }
 
 bool Lexer::is_identifier(const std::string &lexeme) {
     int state = 0;
     int column = 0;
 
-    state = 0;
     for (auto itr = lexeme.begin(); itr != lexeme.end(); itr++) {
-        if (itr == lexeme.begin() && !(isupper(*itr))) {
+        if (state == 1) {
             return false;
         }
 
@@ -98,72 +67,106 @@ bool Lexer::is_identifier(const std::string &lexeme) {
         case 0:
             return false;
         case 1:
+            return false;
+        case 2:
             return true;
         default:
             return false;
     }
 }
 
-bool Lexer::is_real() {    
-    return true;
-}
-
-bool Lexer::is_integer(std::string checkString) {
+bool Lexer::is_integer(const std::string &lexeme) {
     int state = 0;
-    int check;
     int column = 0;
-    check = checkString.size();
-    for (int i = 0; i < check; i++)
-    {
-        if (isdigit(checkString[i]))
-        {
-            column = 1;
+
+    for (auto itr = lexeme.begin(); itr != lexeme.end(); itr++) {
+        if (state == 1) {
+            return false;
         }
-        else
-        {
+
+        if (isdigit(*itr) && *itr == '0') {
             column = 0;
         }
-        state = intFSM[state][column];
+        else if (isdigit(*itr)) {
+            column = 1;
+        }
+        else {
+            return false;
+        }
+        
+        state = integerFSM[state][column];
     }
-    switch (state)
-    {
-        // If FSM is in state 0 it's not in accepting state so return false.
+
+    switch (state) {
         case 0:
             return false;
-        // If FSM is in state 1 it's an accepting state so return true.
         case 1:
+            return false;
+        case 2:
             return true;
+        default:
+            return false;
+    }
+}
+
+bool Lexer::is_real(const std::string &lexeme) {    
+    int state = 0;
+    int column = 0;
+
+    for (auto itr = lexeme.begin(); itr != lexeme.end(); itr++) {
+        if (state == 1) {
+            return false;   
+        }
+
+        if (isdigit(*itr) && *itr == '0') {
+            column = 0;
+        }
+        else if (isdigit(*itr)) {
+            column = 1;
+        }
+        else if (*itr == '.') {
+            column = 2;
+        }
+        else {
+            return false;
+        }
+
+        state = realFSM[state][column];
+    }
+
+    switch (state) {
+        case 0:
+            return false;
+        case 1:
+            return false;
+        case 2:
+            return false;
+        case 3:
+            return false;
+        case 4:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool Lexer::is_keyword(const std::string &lexeme) {
+    if (keywords.find(lexeme) == keywords.end()) {
+        return false;
     }
     return true;
 }
 
-// Checks if the keyword given is part of the list of keywords
-bool Lexer::is_keyword(std::string lexeme) {
-    bool exists = false;
-    std::unordered_set<std::string>::const_iterator finder = keywords.find(lexeme);
-    if (finder == keywords.end())
-    {
-        exists = true;
+bool Lexer::is_operator(const std::string &lexeme) {
+    if (operators.find(lexeme) == operators.end()) {
+        return false;
     }
-    return exists;
+    return true;
 }
 
-bool Lexer::is_operator(std::string lexeme) {
-    bool exists = false;
-    std::unordered_set<std::string>::const_iterator finder = operators.find(lexeme);
-    if (finder == operators.end())
-    {
-        exists = true;
+bool Lexer::is_separator(const std::string &lexeme) {
+    if (separators.find(lexeme) == separators.end()) {
+        return false;
     }
-    return exists;
-}
-
-bool Lexer::is_separator(std::string lexeme) {
-    bool exists = false;
-    std::unordered_set<std::string>::const_iterator finder = separators.find(lexeme);
-    if (finder == separators.end())
-    {
-        exists = true;
-    }
-    return exists;
+    return true;
 }
