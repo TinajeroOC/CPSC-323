@@ -35,7 +35,6 @@ void Lexer::tokenize(std::ifstream& input_file) {
     }
 }
 
-// 
 bool Lexer::validate_tokens() {
     bool valid_token = true;
 
@@ -43,21 +42,72 @@ bool Lexer::validate_tokens() {
     return valid_token;
 }
 
-bool Lexer::is_identifier() {
-    bool exists = false;
-    
-    
+int Lexer::signsAndPeriod(char checkSign)
+{
+    int checkSigns = 0;
+    if (isdigit(checkSign))
+    {
+        checkSigns = 1;
+    }
+    else if (checkSign == '.')
+    {
+        checkSigns = 1;
+    }
+    else if (checkSigns == '+')
+    {
+        checkSigns = 1;
+    }
+    else if (checkSigns == '-')
+    {
+        checkSigns = 1;
+    }
+    else if (isalpha(checkSign))
+    {
+        checkSigns = 0;
+    }
+    return checkSigns;
+}
 
-    return exists;
+bool Lexer::is_identifier(const std::string &lexeme) {
+    int state = 0;
+    int column = 0;
+
+    state = 0;
+    for (auto itr = lexeme.begin(); itr != lexeme.end(); itr++) {
+        if (itr == lexeme.begin() && !(isupper(*itr))) {
+            return false;
+        }
+
+        if (isalpha(*itr)) {
+            column = 0;
+        }
+        else if (isdigit(*itr)) {
+            column = 1;
+        }
+        else if (*itr == '_') {
+            column = 2;
+        }
+        else {
+            return false;
+        }
+
+        state = identifierFSM[state][column];
+    }
+
+    switch (state) {
+        case 0:
+            return false;
+        case 1:
+            return true;
+        default:
+            return false;
+    }
 }
 
 bool Lexer::is_real() {    
-    
     return true;
 }
 
-// Using FSM to determine if the string inputted is an integer or not.
-// If the input is an integer, returns true. Else, return false.
 bool Lexer::is_integer(std::string checkString) {
     int state = 0;
     int check;

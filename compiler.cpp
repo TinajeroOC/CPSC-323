@@ -54,20 +54,12 @@ int main() {
     input_file.close();
     
     cout << "Results file: " << output_file_name << endl;
-    
-    
-    // is_integer function
-    string testInt;
-    cout << "Input an integer please." << endl;
-    cin >> testInt;
-    if (lex.is_integer(testInt))
-    {
-        cout << "Valid integer.";
-    }
-    else
-    {
-        cout << "Invalid integer.";
-    }
+
+    // Temporary code to test is_identifier FSM.
+    cout << lex.is_identifier("As514127_") << endl;
+    cout << lex.is_identifier("v812_1ajhs") << endl;
+    cout << lex.is_identifier("5shAn31_") << endl;
+    cout << lex.is_identifier("A&sna2") << endl;
 
     return 0;
 }

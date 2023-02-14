@@ -37,13 +37,13 @@ class Lexer {
         ~Lexer();
         void tokenize(std::ifstream& input_file);
         bool validate_tokens();
-        bool is_identifier();
+        int signsAndPeriod(char checkSign);
+        bool is_identifier(const std::string &lexeme);
         bool is_integer(std::string checkString);
         bool is_real();
         bool is_keyword(std::string lexeme);
         bool is_operator(std::string lexeme);
         bool is_separator(std::string lexeme);
-        int signsAndPeriod(char checkSign);
     private:
         std::queue<Token> tokens;
         char checkSign;
@@ -58,5 +58,17 @@ class Lexer {
             {0, 1, 2},
         };
 
-        
+        /*
+        * State-Transition Table
+        *
+        *   | {a-Z} | {0-9} | {_}
+        * -----------------------------
+        * 0 |   1   | Inv. | Inv.
+        * 1 |   1   | 1    | 1
+        *
+        */
+        int identifierFSM[2][3] = {
+            {1, -1, -1},
+            {1, 1, 1}
+        };
 };
