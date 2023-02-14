@@ -35,7 +35,17 @@ void Lexer::tokenize(std::ifstream &input_file) {
 }
 
 void Lexer::results(std::ofstream &output_file) {
-    std::string test = "Test";
+    std::string tokenType;
+    #define underline "\033[4m"
+    std::cout << underline << "Output:";
+    #define underline "\033[0m"
+    std::cout << "\ntoken";
+    std::cout << std::setw(15) << "lexeme" << std::endl;
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        std::cout << std::setw(15);
+    }
+
 }
 
 bool Lexer::is_identifier(const std::string &lexeme) {
