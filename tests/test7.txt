@@ -1,0 +1,7 @@
+[*comment test*]
+int test = 1;
+for (int i = 0; i < size; i++) {
+    if(test == 1) {
+        return true;
+    }
+}
