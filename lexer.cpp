@@ -241,6 +241,8 @@ bool Lexer::is_integer(const std::string &lexeme) {
             return false;
         case 2:
             return true;
+        case 3:
+            return true;
         default:
             return false;
     }

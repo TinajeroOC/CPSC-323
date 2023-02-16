@@ -71,20 +71,22 @@ class Lexer {
         /*
         * State-Transition Table
         *
-        * Q = {0, 1, 2} : States
-        * F = {2} : Accepting States
+        * Q = {0, 1, 2, 3} : States
+        * F = {2, 3} : Accepting States
         *
         * S | {0} | {1-9} 
         * ----------------
-        * 0 | 1   | 2
+        * 0 | 2   | 3
         * 1 | 1   | 1
-        * 2 | 2   | 2
+        * 2 | 1   | 1
+        * 3 | 3   | 3
         * 
         */
-        int integerFSM[3][2] = {
-            {0, 2},
+        int integerFSM[4][2] = {
+            {2, 3},
             {1, 1},
-            {2, 2}
+            {1, 1},
+            {3, 3}
         };
 
         /*
