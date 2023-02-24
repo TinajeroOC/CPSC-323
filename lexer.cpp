@@ -24,12 +24,12 @@ void Lexer::tokenize(std::ifstream &input_file) {
                             tokens.push_back(token);
                         }
                         else {
-                            if (is_operator(std::string(previous_token))) {
+                            if (is_operator(previous_token)) {
                                 Token token = {OPERATOR, previous_token};
                                 tokens.push_back(token);
                             }
-                            else if (is_identifier(std::string(previous_token))) {
-                                if (is_keyword(std::string(previous_token))) {
+                            else if (is_identifier(previous_token)) {
+                                if (is_keyword(previous_token)) {
                                     Token token = {KEYWORD, previous_token};
                                     tokens.push_back(token);
                                 }
@@ -38,11 +38,11 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     tokens.push_back(token);
                                 }
                             }
-                            else if (is_integer(std::string(previous_token))) {
+                            else if (is_integer(previous_token)) {
                                 Token token = {INTEGER, previous_token};
                                 tokens.push_back(token);
                             }
-                            else if (is_real(std::string(previous_token))) {
+                            else if (is_real(previous_token)) {
                                 Token token = {REAL, previous_token};
                                 tokens.push_back(token);
                             }
@@ -62,12 +62,12 @@ void Lexer::tokenize(std::ifstream &input_file) {
                             tokens.push_back(token);
                         }
                         else {
-                            if (is_separator(std::string(previous_token))) {
+                            if (is_separator(previous_token)) {
                                 Token token = {SEPARATOR, previous_token};
                                 tokens.push_back(token);
                             }
-                            else if (is_identifier(std::string(previous_token))) {
-                                if (is_keyword(std::string(previous_token))) {
+                            else if (is_identifier(previous_token)) {
+                                if (is_keyword(previous_token)) {
                                     Token token = {KEYWORD, previous_token};
                                     tokens.push_back(token);
                                 }
@@ -76,11 +76,11 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     tokens.push_back(token);
                                 }
                             }
-                            else if (is_integer(std::string(previous_token))) {
+                            else if (is_integer(previous_token)) {
                                 Token token = {INTEGER, previous_token};
                                 tokens.push_back(token);
                             }
-                            else if (is_real(std::string(previous_token))) {
+                            else if (is_real(previous_token)) {
                                 Token token = {REAL, previous_token};
                                 tokens.push_back(token);
                             }
@@ -101,12 +101,12 @@ void Lexer::tokenize(std::ifstream &input_file) {
                         token_holder += std::string(1, word[i]);
                         previous_token = token_holder;
                         if (i == word_size-1) {
-                            if (is_operator(std::string(token_holder))) {
+                            if (is_operator(token_holder)) {
                                 Token token = {OPERATOR, token_holder};
                                 tokens.push_back(token);
                             }
-                            else if (is_identifier(std::string(previous_token))) {
-                                if (is_keyword(std::string(previous_token))) {
+                            else if (is_identifier(previous_token)) {
+                                if (is_keyword(previous_token)) {
                                     Token token = {KEYWORD, previous_token};
                                     tokens.push_back(token);
                                 }
@@ -115,11 +115,11 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     tokens.push_back(token);
                                 }
                             }
-                            else if (is_integer(std::string(token_holder))) {
+                            else if (is_integer(token_holder)) {
                                 Token token = {INTEGER, token_holder};
                                 tokens.push_back(token);
                             }
-                            else if (is_real(std::string(token_holder))) {
+                            else if (is_real(token_holder)) {
                                 Token token = {REAL, token_holder};
                                 tokens.push_back(token);
                             }
