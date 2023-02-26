@@ -1,0 +1,78 @@
+Output:
+-------
+token                         lexeme
+------------------------------------
+keyword                          INT
+identifier                      test
+operator                           =
+integer                            0
+separator                          ;
+keyword                          int
+identifier                   compare
+operator                           =
+integer                          100
+separator                          ;
+keyword                         REAL
+identifier                     test2
+operator                           =
+real                           0.123
+separator                          ;
+keyword                         BOOL
+identifier               trueOrFalse
+operator                           =
+keyword                         true
+separator                          ;
+keyword                           IF
+separator                          (
+identifier               trueOrFalse
+operator                          ==
+operator                           =
+keyword                         true
+separator                          )
+separator                          {
+identifier               trueOrFalse
+operator                           =
+keyword                        false
+separator                          ;
+separator                          }
+keyword                         ELSE
+separator                          {
+identifier               trueOrFalse
+operator                           =
+keyword                         true
+separator                          ;
+separator                          }
+keyword                           if
+separator                          (
+identifier                   compare
+operator                          >=
+operator                           =
+identifier                      test
+separator                          )
+separator                          {
+keyword                           if
+separator                          (
+identifier                      test
+operator                            
+operator                           =
+identifier                   compare
+separator                          )
+separator                          {
+identifier                     test2
+operator                           =
+operator                            
+real                         3.14159
+separator                          ;
+separator                          }
+separator                          }
+keyword                           fi
+identifier                      test
+operator                           =
+identifier                      test
+operator                            
+identifier                   compare
+separator                          ;
+identifier                      test
+operator                           +
+operator                            
+separator                          ;
