@@ -26,7 +26,6 @@ keyword                           IF
 separator                          (
 identifier               trueOrFalse
 operator                          ==
-operator                           =
 keyword                         true
 separator                          )
 separator                          {
@@ -45,22 +44,20 @@ separator                          }
 keyword                           if
 separator                          (
 identifier                   compare
-operator                          >=
-operator                           =
+operator                          =>
 identifier                      test
 separator                          )
 separator                          {
 keyword                           if
 separator                          (
 identifier                      test
-operator                            
-operator                           =
+operator                          <=
 identifier                   compare
 separator                          )
 separator                          {
 identifier                     test2
 operator                           =
-operator                            
+operator                           -
 real                         3.14159
 separator                          ;
 separator                          }
@@ -69,10 +66,10 @@ keyword                           fi
 identifier                      test
 operator                           =
 identifier                      test
-operator                            
+operator                           *
 identifier                   compare
 separator                          ;
 identifier                      test
 operator                           +
-operator                            
+operator                           +
 separator                          ;

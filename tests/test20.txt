@@ -10,7 +10,7 @@ ELSE {
     trueOrFalse = TRUE;
 }
 
-if (compare >= test) {
+if (compare => test) {
     if(test <= compare) {
         test2 = -3.14159;
     }
