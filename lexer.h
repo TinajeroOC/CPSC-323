@@ -12,7 +12,7 @@
 const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
 
 // RAT23S : Operators
-const std::unordered_set<std::string> operators = {"==", "!=", ">", "<", "<=", "=>", "*", "/", "+", "-", "="};
+const std::unordered_set<std::string> operators = {"==", "!=", ">", "<", "<=", ">=", "*", "/", "+", "-", "="};
 
 // RAT23S : Separators
 const std::unordered_set<std::string> separators = {"#", "{", "}", "(", ")", ",", ";"};

@@ -1,0 +1,4 @@
+[*test comment*] comment
+[*   ] are these comments
+123 abc *+-=
+*] [] {} abc 123 *+-=

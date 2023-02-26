@@ -1,20 +1,20 @@
-[* this is comment for this sample code which
-   converts  Fahrenheit into Celcius *]
+INT test = 0;
+int compare = 100;
+REAL test2 = 0.123;
+BOOL trueOrFalse = true;
 
-function convert1x (fahr int)
-{
-    return 5 * (fahr - 32) / 9;
+IF (trueOrFalse == TRUE) {
+    trueOrFalse = FALSE;
+}
+ELSE {
+    trueOrFalse = TRUE;
 }
 
-#
-    Int low, high, step;      [* declarations *]
-#
-
-get (low, high, step);
-while (low  <=  high)  
-    {
-        put (low);
-        put (convert1x (low));
-        low =  low  +  step;
-    } 
-    endwhile
+if (compare >= test) {
+    if(test <= compare) {
+        test2 = -3.14159;
+    }
+}
+fi
+test = test * compare;
+test++;
