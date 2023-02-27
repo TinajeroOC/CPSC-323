@@ -16,41 +16,36 @@ int main() {
     string input_file_name, input_file_path = "tests/";
     string output_file_name, output_file_path = "results/";
 
-    cout << "Input the file name: ";
+    cout << "Input the source file name: ";
     cin >> input_file_name;
     
-    cout << "Verifying the file name..." << endl;
+    cout << "Verifying the source file name..." << endl;
     if (!has_file_extension(input_file_name, "txt")) {
-        cout << "Error: File does not have the txt extension." << endl;
-        exit(-1);
+        throw runtime_error("ERROR: Source file must have a .txt extension.\n");
     }
     
-    cout << "Opening the file..." << endl;
+    cout << "Opening the source file..." << endl;
     input_file_path.append(input_file_name);
     input_file.open(input_file_path);
     if (!input_file.is_open()) {
-        cout << "Error: File could not be opened." << endl;
-        exit(-1);
+        throw runtime_error("ERROR: Source file could not be opened.\n");
     }
 
-    cout << "Tokenizing the file..." << endl;
+    cout << "Tokenizing the source file..." << endl;
     lexer.tokenize(input_file);
     
     cout << "Opening the results file..." << endl;
-    output_file_name = create_timestamp();
-    output_file_name.append(".txt");
+    output_file_name = create_timestamp() + ".txt";
     output_file_path.append(output_file_name);
     output_file.open(output_file_path);
     if (!output_file.is_open()) {
-        cout << "Error: Results file could not be opened." << endl;
-        exit(-1);
+        throw runtime_error("ERROR: Results file colud not be opened.\n");
     }
     
     cout << "Writing to the results file..." << endl;
     lexer.results(output_file);
     
     cout << "Results file: " << output_file_name << endl;
-
     output_file.close();
     input_file.close();
     
@@ -79,7 +74,7 @@ string create_timestamp() {
 
     time(&raw_time);
     time_info = localtime(&raw_time);
-    strftime(time_cstr, 500, "%H-%M-%S-%F", time_info);
+    strftime(time_cstr, 500, "%m-%d-%Y_%H-%M-%S", time_info);
     
     string file_name;
     file_name.append(time_cstr);
