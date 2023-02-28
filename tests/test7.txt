@@ -1,7 +1,0 @@
-[*comment test*]
-int test = 0;
-if(test == 1) {
-    return true;
-}
-else
-real test1 = 1.123;

@@ -8,7 +8,7 @@ else
 	RM = rm -f
 endif
 
-CFLAGS = -std=c++17 -Wall -O2
+CFLAGS = -std=c++17 -Wall -c -g -static -static-libgcc -static-libstdc++
 SOURCES = compiler.cpp lexer.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = application$(EXT)

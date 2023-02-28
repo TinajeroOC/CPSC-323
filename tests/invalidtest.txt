@@ -1,4 +1,31 @@
-[*test comment*] comment
+[*
+This is a special test case to see if invalid
+keywords are still recognized as identifiers and
+if invalid symbols / characters are recognized as invalid.
+*]
+
+[*"for" and "i" should be recognized as a keyword*]
+for (integer i = 0; i < 5; i++) {
+    real test0 = 45212521.32513;
+    int test1 = 0;
+
+    [*
+    Despite not being valid syntax-wise, the lexer
+    should still recognize each individual string 
+    as a valid token.
+    *]
+    int test2 = 0.1;
+}
+
+[*"[" and "]" should be marked as invalid.*]
+while [i < 5.0] {
+    bool test = 0;
+}
+
+[*These characters should be marked as invalid.*]
+α β γ ε
+
 [*   ] are these comments
 123 abc *+-=
+1235512312; [* integer *]
 *] [] {} abc 123 *+-=

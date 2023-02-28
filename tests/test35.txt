@@ -1,0 +1,35 @@
+[*Test Case #3*]
+
+function multiply (number1, number2) 
+{
+    return number1 * number2;
+}
+
+#
+    int test0, test1;
+    bool trueOrFalse;
+    real test2;
+#
+
+get (trueOrFalse, test0, test1);
+test0 = 5;
+while (trueOrFalse)
+{
+    if (test0 == test1)
+    {
+        trueOrFalse = false;
+    }
+    put (multiply (test0, test1));
+    test1 = test0 + 2;
+}
+endwhile
+
+if (test0 >= test1) 
+{
+    put (test0);
+}
+else
+{
+    put (test1);
+}
+fi

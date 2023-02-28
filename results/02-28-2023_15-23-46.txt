@@ -1,0 +1,22 @@
+Output:
+-------
+token                         lexeme
+------------------------------------
+separator                          #
+keyword                          int
+identifier                     test1
+separator                          ,
+identifier                     test2
+separator                          ,
+identifier                     test3
+separator                          ;
+separator                          #
+keyword                          get
+separator                          (
+identifier                     test1
+separator                          ,
+identifier                     test2
+separator                          )
+separator                          ;
+keyword                       return
+separator                          ;

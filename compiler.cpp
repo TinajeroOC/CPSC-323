@@ -39,7 +39,7 @@ int main() {
     output_file_path.append(output_file_name);
     output_file.open(output_file_path);
     if (!output_file.is_open()) {
-        throw runtime_error("ERROR: Results file colud not be opened.\n");
+        throw runtime_error("ERROR: Results file could not be opened.\n");
     }
     
     cout << "Writing to the results file..." << endl;
