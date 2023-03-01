@@ -39,8 +39,7 @@ separator                          ;
 keyword                           if
 separator                          (
 identifier                     test0
-operator                           >
-operator                           =
+operator                          =>
 identifier                     test1
 separator                          )
 separator                          {

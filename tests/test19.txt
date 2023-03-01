@@ -12,7 +12,7 @@ function add (number1, number2)
 #
 
 get (test0, test1);
-if (test0 >= test1)
+if (test0 => test1)
 {
     return add (test0, test1);
 }

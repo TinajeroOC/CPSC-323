@@ -4,7 +4,7 @@ keywords are still recognized as identifiers and
 if invalid symbols / characters are recognized as invalid.
 *]
 
-[*"for" and "i" should be recognized as a keyword*]
+[*"for" and "i" should be recognized as a identifiers*]
 for (integer i = 0; i < 5; i++) {
     real test0 = 45212521.32513;
     int test1 = 0;
@@ -17,7 +17,7 @@ for (integer i = 0; i < 5; i++) {
     int test2 = 0.1;
 }
 
-[*"[" and "]" should be marked as invalid.*]
+[*"[i" and "5.0]" should be marked as invalid.*]
 while [i < 5.0] {
     bool test = 0;
 }
