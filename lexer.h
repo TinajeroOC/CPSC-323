@@ -46,6 +46,7 @@ class Lexer {
         /*
         * State-Transition Table
         *
+        * Q0 = 0 : Stating State
         * Q = {0, 1, 2} : States
         * F = {2} : Accepting States
         *
@@ -65,44 +66,42 @@ class Lexer {
         /*
         * State-Transition Table
         *
-        * Q = {0, 1, 2, 3} : States
-        * F = {2, 3} : Accepting States
+        * Q0 = 0 : Stating State
+        * Q = {0, 1} : States
+        * F = {1} : Accepting States
         *
-        * S | {0} | {1-9} 
-        * ----------------
-        * 0 | 2   | 3
-        * 1 | 1   | 1
-        * 2 | 1   | 1
-        * 3 | 3   | 3
+        * S | {0-9}
+        * ----------
+        * 0 | 1
+        * 1 | 1
         * 
         */
-        int integerFSM[4][2] = {
-            {2, 3},
-            {1, 1},
-            {1, 1},
-            {3, 3}
+        int integerFSM[2][1] = {
+            {1},
+            {1}
         };
 
         /*
         * State-Transition Table
         *
+        * Q0 = 0 : Stating State
         * Q = {0, 1, 2, 3, 4} : States
         * F = {4} : Accepting States
         *
-        * S | {0} | {1-9} | {.}
+        * S | {0-9} | {.}
         * ----------------------
-        * 0 | 2   | 3     | 1
-        * 1 | 1   | 1     | 1
-        * 2 | 1   | 1     | 4
-        * 3 | 3   | 3     | 4
-        * 4 | 4   | 4     | 1
+        * 0 | 2   | 1
+        * 1 | 1   | 1
+        * 2 | 2   | 3
+        * 3 | 4   | 1
+        * 4 | 4   | 1
         *
         */
-        int realFSM[5][3] = {
-            {2, 3, 1},
-            {1, 1, 1},
-            {1, 1, 4},
-            {3, 3, 4},
-            {4, 4, 1},
+        int realFSM[5][2] = {
+            {2, 1},
+            {1, 1},
+            {2, 3},
+            {4, 1},
+            {4, 1},
         };
 };

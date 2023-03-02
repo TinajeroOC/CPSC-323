@@ -308,15 +308,8 @@ bool Lexer::is_integer(const std::string &lexeme) {
     int column = 0;
 
     for (auto itr = lexeme.begin(); itr != lexeme.end(); itr++) {
-        if (state == 1) {
-            return false;
-        }
-
-        if (isdigit(*itr) && *itr == '0') {
+        if (isdigit(*itr)) {
             column = 0;
-        }
-        else if (isdigit(*itr)) {
-            column = 1;
         }
         else {
             return false;
@@ -329,10 +322,6 @@ bool Lexer::is_integer(const std::string &lexeme) {
         case 0:
             return false;
         case 1:
-            return false;
-        case 2:
-            return true;
-        case 3:
             return true;
         default:
             return false;
@@ -348,14 +337,11 @@ bool Lexer::is_real(const std::string &lexeme) {
             return false;   
         }
 
-        if (isdigit(*itr) && *itr == '0') {
+        if (isdigit(*itr)) {
             column = 0;
         }
-        else if (isdigit(*itr)) {
-            column = 1;
-        }
         else if (*itr == '.') {
-            column = 2;
+            column = 1;
         }
         else {
             return false;
