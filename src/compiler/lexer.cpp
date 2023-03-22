@@ -1,37 +1,37 @@
 #include "lexer.h"
 
-Lexer::Lexer() {}
+Lexer::Lexer() { }
 
-Lexer::~Lexer() {}
+Lexer::~Lexer() { }
 
-void Lexer::tokenize(std::ifstream &input_file) {
-    bool is_comment = false;
+void Lexer::tokenize(std::ifstream &inputFile, std::vector<Token> &tokens) {
+    bool isComment = false;
     std::string word;
-    std::string next_line;
-    std::string token_holder;
-    std::string previous_token;
+    std::string nextLine;
+    std::string tokenHolder;
+    std::string previousToken;
     std::string cases;
-    int word_size = 0;
+    int wordSize = 0;
 
-    while (std::getline(input_file, next_line)) {
-        std::stringstream checker(next_line);
+    while (std::getline(inputFile, nextLine)) {
+        std::stringstream checker(nextLine);
         while (checker >> word) {
-            if (word.find("[*") == std::string::npos && is_comment != true) {
-                word_size = word.size();
-                for (int i = 0; i < word_size; i++) {
-                    if (is_separator(std::string(1, word[i]))) {
-                        if (previous_token == "") {
+            if (word.find("[*") == std::string::npos && isComment != true) {
+                wordSize = word.size();
+                for (int i = 0; i < wordSize; i++) {
+                    if (isSeparator(std::string(1, word[i]))) {
+                        if (previousToken == "") {
                             Token token = {SEPARATOR, std::string(1, word[i])};
                             tokens.push_back(token);
                         }
                         else {
-                            std::transform(previous_token.begin(), previous_token.end(), previous_token.begin(), ::tolower);
-                            if (is_operator(previous_token)) {
-                                Token token = {OPERATOR, previous_token};
+                            std::transform(previousToken.begin(), previousToken.end(), previousToken.begin(), ::tolower);
+                            if (isOperator(previousToken)) {
+                                Token token = {OPERATOR, previousToken};
                                 tokens.push_back(token);
                             }
-                            else if (is_identifier(previous_token)) {
-                                if (is_keyword(previous_token)) {
+                            else if (isIdentifier(previousToken)) {
+                                if (isKeyword(previousToken)) {
                                     Token token = {KEYWORD, cases};
                                     tokens.push_back(token);
                                 }
@@ -40,49 +40,49 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     tokens.push_back(token);
                                 }
                             }
-                            else if (is_integer(previous_token)) {
-                                Token token = {INTEGER, previous_token};
+                            else if (isInteger(previousToken)) {
+                                Token token = {INTEGER, previousToken};
                                 tokens.push_back(token);
                             }
-                            else if (is_real(previous_token)) {
-                                Token token = {REAL, previous_token};
+                            else if (isReal(previousToken)) {
+                                Token token = {REAL, previousToken};
                                 tokens.push_back(token);
                             }
                             else {
-                                Token token = {INVALID, previous_token};
+                                Token token = {INVALID, previousToken};
                                 tokens.push_back(token);
                             }
                             Token token = {SEPARATOR, std::string(1, word[i])};
                             tokens.push_back(token);
                         }
-                        previous_token = "";
-                        token_holder = "";
+                        previousToken = "";
+                        tokenHolder = "";
                     }
-                    else if (is_operator(std::string(1, word[i]))) { 
-                        if (previous_token == "") {
+                    else if (isOperator(std::string(1, word[i]))) { 
+                        if (previousToken == "") {
                             if (std::string(1, word[i]) == "=") {
                                 if (std::string(1, word[i+1]) == "=") {
-                                    token_holder = "==";
-                                    Token token = {OPERATOR, token_holder};
+                                    tokenHolder = "==";
+                                    Token token = {OPERATOR, tokenHolder};
                                     tokens.push_back(token);
                                     i++;
                                 }
                                 else if (std::string(1, word[i+1]) == ">") {
-                                    token_holder = "=>";
-                                    Token token = {OPERATOR, token_holder};
+                                    tokenHolder = "=>";
+                                    Token token = {OPERATOR, tokenHolder};
                                     tokens.push_back(token);
                                     i++;
                                 }
                                 else {
-                                    token_holder = "=";
-                                    Token token = {OPERATOR, token_holder};
+                                    tokenHolder = "=";
+                                    Token token = {OPERATOR, tokenHolder};
                                     tokens.push_back(token);
                                 }
                             }
                             else if (std::string(1, word[i]) == "!") {
                                 if (std::string(1, word[i+1]) == "=") {
-                                    token_holder = "!=";
-                                    Token token = {OPERATOR, token_holder};
+                                    tokenHolder = "!=";
+                                    Token token = {OPERATOR, tokenHolder};
                                     tokens.push_back(token);
                                     i++;
                                 }
@@ -93,8 +93,8 @@ void Lexer::tokenize(std::ifstream &input_file) {
                             }
                             else if (std::string(1, word[i]) == "<") {
                                 if (std::string(1, word[i+1]) == "=") {
-                                    token_holder = "<=";
-                                    Token token = {OPERATOR, token_holder};
+                                    tokenHolder = "<=";
+                                    Token token = {OPERATOR, tokenHolder};
                                     tokens.push_back(token);
                                     i++;
                                 }
@@ -109,14 +109,14 @@ void Lexer::tokenize(std::ifstream &input_file) {
                             }
                         }
                         else {
-                            cases = previous_token;
-                            std::transform(previous_token.begin(), previous_token.end(), previous_token.begin(), ::tolower);
-                            if (is_separator(previous_token)) {
-                                Token token = {SEPARATOR, previous_token};
+                            cases = previousToken;
+                            std::transform(previousToken.begin(), previousToken.end(), previousToken.begin(), ::tolower);
+                            if (isSeparator(previousToken)) {
+                                Token token = {SEPARATOR, previousToken};
                                 tokens.push_back(token);
                             }
-                            else if (is_identifier(previous_token)) {
-                                if (is_keyword(previous_token)) {
+                            else if (isIdentifier(previousToken)) {
+                                if (isKeyword(previousToken)) {
                                     Token token = {KEYWORD, cases};
                                     tokens.push_back(token);
                                 }
@@ -125,31 +125,31 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     tokens.push_back(token);
                                 }
                             }
-                            else if (is_integer(previous_token)) {
-                                Token token = {INTEGER, previous_token};
+                            else if (isInteger(previousToken)) {
+                                Token token = {INTEGER, previousToken};
                                 tokens.push_back(token);
                             }
-                            else if (is_real(previous_token)) {
-                                Token token = {REAL, previous_token};
+                            else if (isReal(previousToken)) {
+                                Token token = {REAL, previousToken};
                                 tokens.push_back(token);
                             }
-                            else if (is_separator(std::string(1, word[i]))) {
+                            else if (isSeparator(std::string(1, word[i]))) {
                                 Token token = {SEPARATOR, std::string(1, word[i])};
                                 tokens.push_back(token);
                             }
-                            else if (is_operator(std::string(1, word[i]))) {
+                            else if (isOperator(std::string(1, word[i]))) {
                                 if (std::string(1, word[i]) == "=") {
                                     if (std::string(1, word[i+1]) == "=") {
-                                        token_holder = "==";
-                                        Token token = {OPERATOR, token_holder};
+                                        tokenHolder = "==";
+                                        Token token = {OPERATOR, tokenHolder};
                                         tokens.push_back(token);
                                         i++;
                                     }
                                 }
                                 else if (std::string(1, word[i]) == "!") {
                                     if (std::string(1, word[i+1]) == "=") {
-                                        token_holder = "!=";
-                                        Token token = {OPERATOR, token_holder};
+                                        tokenHolder = "!=";
+                                        Token token = {OPERATOR, tokenHolder};
                                         tokens.push_back(token);
                                         i++;
                                     }
@@ -160,8 +160,8 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                 }
                                 else if (std::string(1, word[i]) == "<") {
                                     if (std::string(1, word[i+1]) == "=") {
-                                        token_holder = "<=";
-                                        Token token = {OPERATOR, token_holder};
+                                        tokenHolder = "<=";
+                                        Token token = {OPERATOR, tokenHolder};
                                         tokens.push_back(token);
                                         i++;
                                     }
@@ -171,33 +171,32 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     }
                                 }
                                 else {
-                                    Token token = {OPERATOR, token_holder};
+                                    Token token = {OPERATOR, tokenHolder};
                                     tokens.push_back(token);
                                 }
                             }
-                            else
-                            {
+                            else {
                                 Token token = {INVALID, std::string(1, word[i])};
                                 tokens.push_back(token);
                             }
                             Token token = {OPERATOR, std::string(1, word[i])};
                             tokens.push_back(token);
                         }
-                        previous_token = "";
-                        token_holder = "";
+                        previousToken = "";
+                        tokenHolder = "";
                     }
                     else {
-                        token_holder += std::string(1, word[i]);
-                        previous_token = token_holder;
-                        cases = previous_token;
-                        std::transform(previous_token.begin(), previous_token.end(), previous_token.begin(), ::tolower);
-                        if (i == word_size-1) {
-                            if (is_operator(token_holder)) {
-                                Token token = {OPERATOR, token_holder};
+                        tokenHolder += std::string(1, word[i]);
+                        previousToken = tokenHolder;
+                        cases = previousToken;
+                        std::transform(previousToken.begin(), previousToken.end(), previousToken.begin(), ::tolower);
+                        if (i == wordSize-1) {
+                            if (isOperator(tokenHolder)) {
+                                Token token = {OPERATOR, tokenHolder};
                                 tokens.push_back(token);
                             }
-                            else if (is_identifier(previous_token)) {
-                                if (is_keyword(previous_token)) {
+                            else if (isIdentifier(previousToken)) {
+                                if (isKeyword(previousToken)) {
                                     Token token = {KEYWORD, cases};
                                     tokens.push_back(token);
                                 }
@@ -206,67 +205,36 @@ void Lexer::tokenize(std::ifstream &input_file) {
                                     tokens.push_back(token);
                                 }
                             }
-                            else if (is_integer(token_holder)) {
-                                Token token = {INTEGER, token_holder};
+                            else if (isInteger(tokenHolder)) {
+                                Token token = {INTEGER, tokenHolder};
                                 tokens.push_back(token);
                             }
-                            else if (is_real(token_holder)) {
-                                Token token = {REAL, token_holder};
+                            else if (isReal(tokenHolder)) {
+                                Token token = {REAL, tokenHolder};
                                 tokens.push_back(token);
                             }
                             else
                             {
-                                Token token = {INVALID, token_holder};
+                                Token token = {INVALID, tokenHolder};
                                 tokens.push_back(token);
                             }
                         }
                     }
                 }
-                previous_token = "";
-                token_holder = "";
+                previousToken = "";
+                tokenHolder = "";
             }
             else {
-                is_comment = true;
+                isComment = true;
                 if (word.find("*]") != std::string::npos) {
-                    is_comment = false;
+                    isComment = false;
                 }
             }
         }
     }
 }
 
-void Lexer::results(std::ofstream &output_file) {
-    output_file << "Output:" << std::endl;
-    output_file << "-------" << std::endl;
-    output_file << std::left << std::setw(18) << "token" << std::right << std::setw(18) << "lexeme" << std::endl;
-    output_file << "------------------------------------" << std::endl;
-
-    for (auto itr = tokens.begin(); itr != tokens.end(); itr++) {
-        output_file << std::left << std::setw(18) << token_type_str(itr->type) << std::right << std::setw(18) << itr->lexeme << std::endl;
-    }
-}
-
-std::string Lexer::token_type_str(const TokenType &type) {
-    switch (type) {
-        case IDENTIFIER:
-            return "identifier";
-        case INTEGER:
-            return "integer";
-        case REAL:
-            return "real";
-        case KEYWORD:
-            return "keyword";
-        case OPERATOR:
-            return "operator";
-        case SEPARATOR:
-            return "separator";
-        case INVALID:
-            return "invalid";
-    }
-    return "ERROR";
-}
-
-bool Lexer::is_identifier(const std::string &lexeme) {
+bool Lexer::isIdentifier(const std::string &lexeme) {
     int state = 0;
     int column = 0;
 
@@ -303,7 +271,7 @@ bool Lexer::is_identifier(const std::string &lexeme) {
     }
 }
 
-bool Lexer::is_integer(const std::string &lexeme) {
+bool Lexer::isInteger(const std::string &lexeme) {
     int state = 0;
     int column = 0;
 
@@ -328,7 +296,7 @@ bool Lexer::is_integer(const std::string &lexeme) {
     }
 }
 
-bool Lexer::is_real(const std::string &lexeme) {    
+bool Lexer::isReal(const std::string &lexeme) {    
     int state = 0;
     int column = 0;
 
@@ -366,21 +334,21 @@ bool Lexer::is_real(const std::string &lexeme) {
     }
 }
 
-bool Lexer::is_keyword(const std::string &lexeme) {
+bool Lexer::isKeyword(const std::string &lexeme) {
     if (keywords.find(lexeme) == keywords.end()) {
         return false;
     }
     return true;
 }
 
-bool Lexer::is_operator(const std::string &lexeme) {
+bool Lexer::isOperator(const std::string &lexeme) {
     if (operators.find(lexeme) == operators.end()) {
         return false;
     }
     return true;
 }
 
-bool Lexer::is_separator(const std::string &lexeme) {
+bool Lexer::isSeparator(const std::string &lexeme) {
     if (separators.find(lexeme) == separators.end()) {
         return false;
     }

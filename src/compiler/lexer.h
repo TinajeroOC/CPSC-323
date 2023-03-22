@@ -1,48 +1,28 @@
 #pragma once
 #include <iomanip>
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <unordered_set>
-#include <string>
 #include <sstream>
 #include <algorithm>
+#include "token.h"
 
 const std::unordered_set<std::string> keywords = {"int", "if", "else", "fi", "while", "endwhile", "return", "get", "put", "bool", "real", "function", "true", "false"};
 const std::unordered_set<std::string> operators = {"==", "!=", ">", "<", "<=", "=>", "*", "/", "+", "-", "="};
 const std::unordered_set<std::string> separators = {"#", "{", "}", "(", ")", ",", ";"};
 
-enum TokenType {
-    IDENTIFIER,
-    INTEGER,
-    REAL,
-    KEYWORD,
-    OPERATOR,
-    SEPARATOR,
-    INVALID,
-};
-
-struct Token {
-    TokenType type;
-    std::string lexeme;
-};
-
 class Lexer {
     public:
         Lexer();
         ~Lexer();
-        void tokenize(std::ifstream &input_file);
-        void results(std::ofstream &output_file);
-        bool is_identifier(const std::string &lexeme);
-        bool is_integer(const std::string &lexeme);
-        bool is_real(const std::string &lexeme);
-        bool is_keyword(const std::string &lexeme);
-        bool is_operator(const std::string &lexeme);
-        bool is_separator(const std::string &lexeme);
-        std::string token_type_str(const TokenType &type);
+        void tokenize(std::ifstream &inputFile, std::vector<Token> &tokens);
+        bool isIdentifier(const std::string &lexeme);
+        bool isInteger(const std::string &lexeme);
+        bool isReal(const std::string &lexeme);
+        bool isKeyword(const std::string &lexeme);
+        bool isOperator(const std::string &lexeme);
+        bool isSeparator(const std::string &lexeme);
     private:
-        std::vector<Token> tokens;
-
         /*
         * State-Transition Table
         *

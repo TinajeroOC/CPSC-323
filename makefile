@@ -2,14 +2,16 @@ ifeq ($(OS),Windows_NT)
 	CC = g++
 	EXT = .exe
 	RM = del
+	SEP = \\
 else
 	CC = g++
 	EXT =
 	RM = rm -f
+	SEP = /
 endif
 
 CFLAGS = -std=c++17 -Wall -c -g -static -static-libgcc -static-libstdc++
-SOURCES = compiler.cpp lexer.cpp
+SOURCES = src$(SEP)main.cpp src$(SEP)compiler$(SEP)compiler.cpp src$(SEP)compiler$(SEP)lexer.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = application$(EXT)
 
