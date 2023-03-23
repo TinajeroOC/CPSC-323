@@ -24,7 +24,7 @@ while (trueOrFalse)
 }
 endwhile
 
-if (test0 => test1) 
+if (test0 != test1) 
 {
     put (test0);
 }
@@ -33,3 +33,4 @@ else
     put (test1);
 }
 fi
+5.12a412321

@@ -58,7 +58,7 @@ void Lexer::tokenize(std::ifstream &inputFile, std::vector<Token> &tokens) {
                         previousToken = "";
                         tokenHolder = "";
                     }
-                    else if (isOperator(std::string(1, word[i]))) { 
+                    else if (isOperator(std::string(1, word[i]))) {
                         if (previousToken == "") {
                             if (std::string(1, word[i]) == "=") {
                                 if (std::string(1, word[i+1]) == "=") {
@@ -190,6 +190,18 @@ void Lexer::tokenize(std::ifstream &inputFile, std::vector<Token> &tokens) {
                         previousToken = tokenHolder;
                         cases = previousToken;
                         std::transform(previousToken.begin(), previousToken.end(), previousToken.begin(), ::tolower);
+                        if (std::string(1, word[i]) == "!") {
+                            if (std::string(1, word[i+1]) == "=") {
+                                tokenHolder = "!=";
+                                Token token = {OPERATOR, tokenHolder};
+                                tokens.push_back(token);
+                                i = i + 2;
+                            }
+                            else {
+                                Token token = {INVALID, std::string(1, word[i])};
+                                tokens.push_back(token);
+                            }
+                        }
                         if (i == wordSize-1) {
                             if (isOperator(tokenHolder)) {
                                 Token token = {OPERATOR, tokenHolder};

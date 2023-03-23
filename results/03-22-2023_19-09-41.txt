@@ -80,7 +80,6 @@ keyword                     endwhile
 keyword                           if
 separator                          (
 identifier                     test0
-operator                           >
 operator                           =
 identifier                     test1
 separator                          )
@@ -100,3 +99,4 @@ separator                          )
 separator                          ;
 separator                          }
 keyword                           fi
+invalid                  5.12a412321
