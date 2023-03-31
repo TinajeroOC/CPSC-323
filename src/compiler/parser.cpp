@@ -582,9 +582,9 @@ void Parser::procedureR36() {
     procedureR37();
 }
 
-// R37 : <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | true | false
+// R37 : <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
 void Parser::procedureR37() {
-    outputFile << "<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | true | false" << std::endl;
+    outputFile << "<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false" << std::endl;
 
     switch (this->token.type) {
         case IDENTIFIER:
@@ -616,13 +616,16 @@ void Parser::procedureR37() {
             }
 
             break;
+        case REAL:
+            nextToken();
+            break;
         case KEYWORD:
             if (this->token.lexeme == "true" || this->token.lexeme == "false") {
                 nextToken();
             }
             break;
         default:
-            logError({"<identifier>", "<integer>", "(", "true", "false"}, this->token.lexeme, this->token.line);
+            logError({"<identifier>", "<integer>", "(", "<real>", "true", "false"}, this->token.lexeme, this->token.line);
     }
 }
 
