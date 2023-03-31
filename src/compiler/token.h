@@ -15,3 +15,5 @@ struct Token {
     TokenType type;
     std::string lexeme;
 };
+
+std::string tokenTypeString(const TokenType &type);

@@ -11,7 +11,7 @@ else
 endif
 
 CFLAGS = -std=c++17 -Wall -c -g -static -static-libgcc -static-libstdc++
-SOURCES = src$(SEP)main.cpp src$(SEP)compiler$(SEP)compiler.cpp src$(SEP)compiler$(SEP)lexer.cpp
+SOURCES = src$(SEP)main.cpp src$(SEP)compiler$(SEP)token.cpp src$(SEP)compiler$(SEP)compiler.cpp src$(SEP)compiler$(SEP)lexer.cpp src$(SEP)compiler$(SEP)parser.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = application$(EXT)
 

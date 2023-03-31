@@ -1,10 +1,10 @@
 #include "lexer.h"
 
-Lexer::Lexer() { }
+Lexer::Lexer(std::ifstream &inputFile, std::ofstream &outputFile, std::vector<Token> &tokens) : inputFile(inputFile), outputFile(outputFile), tokens(tokens) { }
 
 Lexer::~Lexer() { }
 
-void Lexer::tokenize(std::ifstream &inputFile, std::vector<Token> &tokens) {
+void Lexer::tokenize() {
     bool isComment = false;
     std::string word;
     std::string nextLine;
@@ -244,6 +244,19 @@ void Lexer::tokenize(std::ifstream &inputFile, std::vector<Token> &tokens) {
             }
         }
     }
+}
+
+void Lexer::writeTokensToFile() {
+    outputFile << "Output:" << std::endl;
+    outputFile << "-------" << std::endl;
+    outputFile << std::left << std::setw(18) << "token" << std::right << std::setw(18) << "lexeme" << std::endl;
+    outputFile << "------------------------------------" << std::endl;
+
+    for (auto itr = tokens.begin(); itr != tokens.end(); itr++) {
+        outputFile << std::left << std::setw(18) << tokenTypeString(itr->type) << std::right << std::setw(18) << itr->lexeme << std::endl;
+    }
+
+    outputFile << "------------------------------------" << std::endl;
 }
 
 bool Lexer::isIdentifier(const std::string &lexeme) {

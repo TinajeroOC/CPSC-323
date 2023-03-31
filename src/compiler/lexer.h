@@ -14,16 +14,21 @@ const std::unordered_set<std::string> separators = {"#", "{", "}", "(", ")", ","
 
 class Lexer {
     public:
-        Lexer();
+        Lexer(std::ifstream &inputFile, std::ofstream &outputFile, std::vector<Token> &tokens);
         ~Lexer();
-        void tokenize(std::ifstream &inputFile, std::vector<Token> &tokens);
+        void tokenize();
+        void writeTokensToFile();
+    private:
+        std::ifstream &inputFile;
+        std::ofstream &outputFile;
+        std::vector<Token> &tokens;
         bool isIdentifier(const std::string &lexeme);
         bool isInteger(const std::string &lexeme);
         bool isReal(const std::string &lexeme);
         bool isKeyword(const std::string &lexeme);
         bool isOperator(const std::string &lexeme);
         bool isSeparator(const std::string &lexeme);
-    private:
+
         /*
         * State-Transition Table
         *
