@@ -11,7 +11,7 @@ void Parser::parse() {
     procedureR1();
 }
 
-void Parser::logError(const std::vector<std::string> &expected, const std::string lexeme, const int line) {
+void Parser::logError(const std::vector<std::string> &expected, const std::string &lexeme, const int &line) {
     std::string message = "Syntax error: Line " + std::to_string(line) + ": Expected ";
     for (auto itr = expected.begin(); itr != expected.end(); itr++) {
         message += "'" + *itr + "'";
