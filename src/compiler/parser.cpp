@@ -42,14 +42,14 @@ void Parser::procedureR1() {
     procedureR2();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "#")) {
-        logError({"#"}, this->token.lexeme, -1);
+        logError({"#"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR12();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "#")) {
-        logError({"#"}, this->token.lexeme, -1);
+        logError({"#"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -94,24 +94,24 @@ void Parser::procedureR5() {
     outputFile << "<Function> ::= function <Identifier>(<Opt Parameter List>) <Opt Declaration List> <Body>" << std::endl;
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "function")) {
-        logError({"function"}, this->token.lexeme, -1);
+        logError({"function"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == IDENTIFIER)) {
-        logError({"identifier"}, this->token.lexeme, -1);
+        logError({"identifier"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "(")) {
-        logError({"("}, this->token.lexeme, -1);
+        logError({"("}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR6();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-        logError({")"}, this->token.lexeme, -1);
+        logError({")"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -168,7 +168,7 @@ void Parser::procedureR10() {
     outputFile << "<Qualifier> ::= int | bool | real" << std::endl;
 
     if (!(this->token.type == KEYWORD && (this->token.lexeme == "int" || this->token.lexeme == "bool" || this->token.lexeme == "real"))) {
-        logError({"int", "bool", "real"}, this->token.lexeme, -1);
+        logError({"int", "bool", "real"}, this->token.lexeme, this->token.line);
     }
 
     return;
@@ -179,14 +179,14 @@ void Parser::procedureR11() {
     outputFile << "<Body> ::= { <Statement List> }" << std::endl;
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "{")) {
-        logError({"{"}, this->token.lexeme, -1);
+        logError({"{"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR18();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "}")) {
-        logError({"}"}, this->token.lexeme, -1);
+        logError({"}"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -209,7 +209,7 @@ void Parser::procedureR13() {
     procedureR15();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ";")) {
-        logError({";"}, this->token.lexeme, -1);
+        logError({";"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -242,7 +242,7 @@ void Parser::procedureR16() {
     outputFile << "<IDs> ::= <Identifier> <IDs'>" << std::endl;
 
     if (!(this->token.type == IDENTIFIER)) {
-        logError({"identifier"}, this->token.lexeme, -1);
+        logError({"identifier"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -313,7 +313,7 @@ void Parser::procedureR20() {
             }
             break;
         default:
-            logError({"<separator>", "<identifier>", "if", "return", "put", "get", "while"}, this->token.lexeme, -1);
+            logError({"<separator>", "<identifier>", "if", "return", "put", "get", "while"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -322,14 +322,14 @@ void Parser::procedureR21() {
     outputFile << "<Compound> ::= { <Statement List> }" << std::endl;
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "{")) {
-        logError({"{"}, this->token.lexeme, -1);
+        logError({"{"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR18();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "}")) {
-        logError({"}"}, this->token.lexeme, -1);
+        logError({"}"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -338,12 +338,12 @@ void Parser::procedureR22() {
     outputFile << "<Assign> ::= <Identifier> = <Expression> ;" << std::endl;
 
     if (!(this->token.type == IDENTIFIER)) {
-        logError({"<identifier>"}, this->token.lexeme, -1);
+        logError({"<identifier>"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == OPERATOR && this->token.lexeme == "=")) {
-        logError({"="}, this->token.lexeme, -1);
+        logError({"="}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -355,19 +355,19 @@ void Parser::procedureR23() {
     outputFile << "<If> ::= if ( <Condition> ) <Statement> <If'>" << std::endl;
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "if")) {
-        logError({"if"}, this->token.lexeme, -1);
+        logError({"if"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "(")) {
-        logError({"("}, this->token.lexeme, -1);
+        logError({"("}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR30();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-        logError({")"}, this->token.lexeme, -1);
+        logError({")"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -386,7 +386,7 @@ void Parser::procedureR24() {
     }
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "else")) {
-        logError({"else"}, this->token.lexeme, -1);
+        logError({"else"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -394,7 +394,7 @@ void Parser::procedureR24() {
 
     nextToken();
     if (!(this->token.type == KEYWORD && this->token.lexeme == "fi")) {
-        logError({"fi"}, this->token.lexeme, -1);
+        logError({"fi"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -403,7 +403,7 @@ void Parser::procedureR25() {
     outputFile << "<Return> ::= return <Return'>" << std::endl;
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "return")) {
-        logError({"return"}, this->token.lexeme, -1);
+        logError({"return"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -421,7 +421,7 @@ void Parser::procedureR26() {
     procedureR32();
     
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ";")) {
-        logError({";"}, this->token.lexeme, -1);
+        logError({";"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -430,24 +430,24 @@ void Parser::procedureR27() {
     outputFile << "<Print> ::= put ( <Expression> ) ;" << std::endl;
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "put")) {
-        logError({"put"}, this->token.lexeme, -1);
+        logError({"put"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "(")) {
-        logError({"("}, this->token.lexeme, -1);
+        logError({"("}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR32();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-        logError({")"}, this->token.lexeme, -1);
+        logError({")"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ";")) {
-        logError({";"}, this->token.lexeme, -1);
+        logError({";"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -456,24 +456,24 @@ void Parser::procedureR28() {
     outputFile << "<Scan> ::= get ( <IDs> ) ;" << std::endl;
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "get")) {
-        logError({"get"}, this->token.lexeme, -1);
+        logError({"get"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "(")) {
-        logError({"("}, this->token.lexeme, -1);
+        logError({"("}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR16();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-        logError({")"}, this->token.lexeme, -1);
+        logError({")"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ";")) {
-        logError({";"}, this->token.lexeme, -1);
+        logError({";"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -482,19 +482,19 @@ void Parser::procedureR29() {
     outputFile << "<While> ::= while ( <Condition> ) <Statement> endwhile" << std::endl;
 
     if (!(this->token.type == KEYWORD && this->token.lexeme == "while")) {
-        logError({"while"}, this->token.lexeme, -1);
+        logError({"while"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     if (!(this->token.type == SEPARATOR && this->token.lexeme == "(")) {
-        logError({"("}, this->token.lexeme, -1);
+        logError({"("}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
     procedureR30();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-        logError({")"}, this->token.lexeme, -1);
+        logError({")"}, this->token.lexeme, this->token.line);
     }
 
     nextToken();
@@ -502,7 +502,7 @@ void Parser::procedureR29() {
 
     nextToken();
     if (!(this->token.type == KEYWORD && this->token.lexeme == "endwhile")) {
-        logError({"endwhile"}, this->token.lexeme, -1);
+        logError({"endwhile"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -521,7 +521,7 @@ void Parser::procedureR31() {
     outputFile << "<Relop> ::= == | != | > | < | <= | =>" << std::endl;
 
     if (!(this->token.type == OPERATOR && (this->token.lexeme == "==" || this->token.lexeme == "!=" || this->token.lexeme == ">" || this->token.lexeme == "<" || this->token.lexeme == "<=" || this->token.lexeme == "=>"))) {
-        logError({"==", "!=", ">", "<", "<=", "=>"}, this->token.lexeme, -1);
+        logError({"==", "!=", ">", "<", "<=", "=>"}, this->token.lexeme, this->token.line);
     }
 
     return;
@@ -597,7 +597,7 @@ void Parser::procedureR37() {
             procedureR16();
 
             if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-                logError({")"}, this->token.lexeme, -1);
+                logError({")"}, this->token.lexeme, this->token.line);
             }
             break;
         case INTEGER:
@@ -605,14 +605,14 @@ void Parser::procedureR37() {
             break;
         case SEPARATOR:
             if (!(this->token.lexeme == "(")) {
-                logError({"("}, this->token.lexeme, -1);
+                logError({"("}, this->token.lexeme, this->token.line);
             }
 
             nextToken();
             procedureR32();
 
             if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
-                logError({")"}, this->token.lexeme, -1);
+                logError({")"}, this->token.lexeme, this->token.line);
             }
 
             break;
@@ -622,7 +622,7 @@ void Parser::procedureR37() {
             }
             break;
         default:
-            logError({"<identifier>", "<integer>", "(", "true", "false"}, this->token.lexeme, -1);
+            logError({"<identifier>", "<integer>", "(", "true", "false"}, this->token.lexeme, this->token.line);
     }
 }
 

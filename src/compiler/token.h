@@ -14,6 +14,7 @@ enum TokenType {
 struct Token {
     TokenType type;
     std::string lexeme;
+    int line;
 };
 
 std::string tokenTypeString(const TokenType &type);
