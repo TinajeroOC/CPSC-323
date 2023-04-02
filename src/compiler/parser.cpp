@@ -277,6 +277,9 @@ void Parser::procedureR19() {
 
     if (!((this->token.type == SEPARATOR && (this->token.lexeme == "{")) || this->token.type == IDENTIFIER 
     || (this->token.type == KEYWORD && (this->token.lexeme == "if" || this->token.lexeme == "return" || this->token.lexeme == "put" || this->token.lexeme == "get" || this->token.lexeme == "while")))) {
+        if (!((this->token.type == SEPARATOR && this->token.lexeme == "}") || (this->token.type == SEPARATOR && this->token.lexeme == ";"))) {
+            logError({"{", "identifier", "if", "return", "put", "get", "while"}, this->token.lexeme, this->token.line);
+        }
         procedureR38();
         return;
     }
@@ -290,7 +293,9 @@ void Parser::procedureR20() {
 
     switch (this->token.type) {
         case SEPARATOR:
-            procedureR21();
+            if (this->token.lexeme == "{") {
+                procedureR21();
+            }
             break;
         case IDENTIFIER:
             procedureR22();
@@ -313,7 +318,7 @@ void Parser::procedureR20() {
             }
             break;
         default:
-            logError({"<separator>", "<identifier>", "if", "return", "put", "get", "while"}, this->token.lexeme, this->token.line);
+            logError({"{", "<identifier>", "if", "return", "put", "get", "while"}, this->token.lexeme, this->token.line);
     }
 }
 
@@ -348,6 +353,10 @@ void Parser::procedureR22() {
 
     nextToken();
     procedureR32();
+
+    if (!(this->token.type == SEPARATOR && this->token.lexeme == ";")) {
+        logError({";"}, this->token.lexeme, this->token.line);
+    }
 }
 
 // R23 : <If> ::= if ( <Condition> ) <Statement> <If'>
