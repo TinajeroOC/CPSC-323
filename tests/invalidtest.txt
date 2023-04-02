@@ -1,0 +1,6 @@
+[*for loops are not in the rules so 'for' should be seen as an identifier.*]
+function testFor(valid int) {
+    for (int i = 0; i < 5; i++) {
+        test = test + 1;
+    }
+}

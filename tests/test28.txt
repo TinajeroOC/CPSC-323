@@ -1,0 +1,28 @@
+[*Test case > 21 lines*]
+function testWhile(valid int, valid1 real, valid2 bool) {
+    while (test > 0) {
+        test = test - 1;
+
+    } endwhile
+}
+
+function getReal(testReal real) {
+    get (testReal);
+}
+
+function testParameters() {
+    return ;
+}
+#
+int test;
+bool test1;
+real test2;
+real test3;
+#
+test = 5;
+test1 = false;
+test2 = 1.2345;
+test = test + test;
+test1 = test - test;
+test2 = test2 / 5;
+test = test1 * test2;
