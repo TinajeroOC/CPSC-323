@@ -1,0 +1,52 @@
+Output:
+-------
+token                         lexeme
+------------------------------------
+keyword                     function
+identifier                      test
+separator                          (
+separator                          )
+separator                          {
+keyword                       return
+separator                          ;
+separator                          }
+separator                          #
+keyword                     function
+identifier                     test1
+separator                          (
+separator                          )
+separator                          {
+keyword                       return
+separator                          ;
+separator                          }
+------------------------------------
+Token: keyword Lexeme: function
+<Rat23S> ::= <Opt Function Definitions> # <Opt Declaration List> # <Statement List>
+<Opt Function Definitions> ::= <Function Definitions> | <Empty>
+<Function Definitions> ::= <Function> <Function'>
+<Function> ::= function <Identifier>(<Opt Parameter List>) <Opt Declaration List> <Body>
+Token: identifier Lexeme: test
+Token: separator Lexeme: (
+Token: separator Lexeme: )
+<Opt Parameter List> ::= <Parameter List> | <Empty>
+<Empty> ::= <Empty>
+Token: separator Lexeme: {
+<Opt Declaration List> ::= <Declaration List> | <Empty>
+<Empty> ::= <Empty>
+<Body> ::= { <Statement List> }
+Token: keyword Lexeme: return
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Return> ::= return <Return'>
+Token: separator Lexeme: ;
+<Return'> ::= ; | <Expression> ;
+Token: separator Lexeme: }
+<Statement'> ::= <Empty> | <Statement List>
+<Empty> ::= <Empty>
+Token: separator Lexeme: #
+<Function'> ::= <Empty> | <Function Definitions>
+<Empty> ::= <Empty>
+Token: keyword Lexeme: function
+<Opt Declaration List> ::= <Declaration List> | <Empty>
+<Empty> ::= <Empty>
+Syntax error: Line 6: Expected '#' but got 'function'.
