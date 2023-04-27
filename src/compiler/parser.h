@@ -16,7 +16,7 @@ class Parser {
         std::vector<Token>::iterator itr;
         Token token;
         void logError(const std::vector<std::string> &expected, const std::string &lexeme, const int &line);
-        void nextToken();
+        bool nextToken();
         void procedureR1();
         void procedureR2();
         void procedureR3();

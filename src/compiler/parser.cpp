@@ -26,13 +26,14 @@ void Parser::logError(const std::vector<std::string> &expected, const std::strin
     throw std::runtime_error(message);
 }
 
-void Parser::nextToken() {
+bool Parser::nextToken() {
     if (++this->itr == this->tokens.end()) {
-        return;
+        return false;
     }
 
     this->token = *this->itr;
     outputFile << "Token: " + tokenTypeString(this->token.type) + " Lexeme: " + this->token.lexeme << std::endl;
+    return true;
 }
 
 // R1 : <Rat23S> ::= <Opt Function Definitions> # <Opt Declaration List> # <Statement List>
@@ -267,7 +268,9 @@ void Parser::procedureR18() {
     outputFile << "<Statement List> ::= <Statement> <Statement'>" << std::endl;
 
     procedureR20();
-    nextToken();
+    if (!nextToken()) {
+        return;
+    }
     procedureR19();
 }
 
@@ -608,6 +611,8 @@ void Parser::procedureR37() {
             if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
                 logError({")"}, this->token.lexeme, this->token.line);
             }
+            nextToken();
+
             break;
         case INTEGER:
             nextToken();
@@ -623,6 +628,7 @@ void Parser::procedureR37() {
             if (!(this->token.type == SEPARATOR && this->token.lexeme == ")")) {
                 logError({")"}, this->token.lexeme, this->token.line);
             }
+            nextToken();
 
             break;
         case REAL:
