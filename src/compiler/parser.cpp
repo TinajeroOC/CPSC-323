@@ -1,5 +1,7 @@
 #include "parser.h"
 
+int Memory_address = 5000;
+
 Parser::Parser(std::ofstream &outputFile, std::vector<Token> &tokens) : outputFile(outputFile), tokens(tokens) { }
 
 Parser::~Parser() { }
