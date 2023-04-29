@@ -303,6 +303,8 @@ void Parser::procedureR20() {
             }
             break;
         case IDENTIFIER:
+            symbol_table[Memory_address, this->token.lexeme];
+            Memory_address++;
             procedureR22();
             break;
         case KEYWORD:

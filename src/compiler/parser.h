@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <fstream>
 #include <vector>
+#include <unordered_map>
 #include "token.h"
 
 class Parser {
@@ -55,4 +56,5 @@ class Parser {
         void procedureR36();
         void procedureR37();
         void procedureR38();
+        std::unordered_map<std::string, int> symbol_table;
 };
