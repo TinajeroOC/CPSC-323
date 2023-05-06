@@ -317,8 +317,7 @@ void Parser::procedureR20() {
                 procedureR28();
             } 
             else if (this->token.lexeme == "while") {
-                save = token;
-                instrtab.gen_instr("LABEL", get_address(save), this->token.lexeme);
+                instrtab.gen_instr("LABEL", -1);
                 procedureR29();
             }
             break;
@@ -358,7 +357,7 @@ void Parser::procedureR22() {
         logError({"="}, this->token.lexeme, this->token.line);
     }
 
-    instrtab.gen_instr("POPM", get_address(save), this->token.lexeme);
+    instrtab.gen_instr("POPM", get_address(save));
     
     nextToken();
     procedureR32();
@@ -389,6 +388,7 @@ void Parser::procedureR23() {
     }
 
     nextToken();
+    instrtab.back_patch(jump_address);
     procedureR20();
 
     nextToken();
@@ -516,6 +516,8 @@ void Parser::procedureR29() {
     }
 
     nextToken();
+    instrtab.gen_instr("JMP", get_address(save));
+    instrtab.back_patch(jump_address);
     procedureR20();
 
     nextToken();
@@ -539,22 +541,22 @@ void Parser::procedureR31() {
     outputFile << "<Relop> ::= == | != | > | < | <= | =>" << std::endl;
 
     if (this->token.lexeme == "==") {
-        instrtab.gen_instr("EQU", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("EQU", -1);
     }
     else if (this->token.lexeme == "!=") {
-        instrtab.gen_instr("NEQ", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("NEQ", -1);
     }
     else if (this->token.lexeme == ">") {
-        instrtab.gen_instr("GRT", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("GRT", -1);
     }
     else if (this->token.lexeme == "<") {
-        instrtab.gen_instr("LES", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("LES", -1);
     }
     else if (this->token.lexeme == "<=") {
-        instrtab.gen_instr("LEQ", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("LEQ", -1);
     }
     else if (this->token.lexeme == "=>") {
-        instrtab.gen_instr("GEQ", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("GEQ", -1);
     }    
     else {
         logError({"==", "!=", ">", "<", "<=", "=>"}, this->token.lexeme, this->token.line);
@@ -584,10 +586,10 @@ void Parser::procedureR33() {
     save = token;
 
     if (this->token.lexeme == "+") {
-        instrtab.gen_instr("ADD", get_address(save), NULL);
+        instrtab.gen_instr("ADD", -1);
     }
     else if (this->token.lexeme == "-") {
-        instrtab.gen_instr("SUB", get_address(save), NULL);
+        instrtab.gen_instr("SUB", -1);
     }
 
     nextToken();
@@ -613,10 +615,10 @@ void Parser::procedureR35() {
     }
 
     if (this->token.lexeme == "*") {
-        instrtab.gen_instr("MUL", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("MUL", -1);
     }
     else if (this->token.lexeme == "/") {
-        instrtab.gen_instr("DIV", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("DIV", -1);
     }
 
     nextToken();
@@ -629,7 +631,7 @@ void Parser::procedureR36() {
     outputFile << "<Factor> ::= - <Primary> | <Primary>" << std::endl;
 
     if (this->token.type == OPERATOR && this->token.lexeme == "-") {
-        instrtab.gen_instr("SUB", get_address(save), this->token.lexeme);
+        instrtab.gen_instr("SUB", -1);
         nextToken();
     }
 
@@ -694,6 +696,6 @@ void Parser::procedureR38() {
     return;
 }
 
-const int get_address(Token& save) {
+int Parser::get_address(Token& save) {
     return Memory_address;
 }
