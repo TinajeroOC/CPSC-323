@@ -1,6 +1,6 @@
 #include "parser.h"
+#include "icg.h"
 
-int Memory_address = 5000;
 
 Parser::Parser(std::ofstream &outputFile, std::vector<Token> &tokens) : outputFile(outputFile), tokens(tokens) { }
 
@@ -132,7 +132,6 @@ void Parser::procedureR6() {
         procedureR38();
         return;
     }
-
     procedureR7();
 }
 
@@ -247,7 +246,6 @@ void Parser::procedureR16() {
     if (!(this->token.type == IDENTIFIER)) {
         logError({"identifier"}, this->token.lexeme, this->token.line);
     }
-
     nextToken();
     procedureR17();
 }
@@ -303,8 +301,6 @@ void Parser::procedureR20() {
             }
             break;
         case IDENTIFIER:
-            symbol_table[Memory_address, this->token.lexeme];
-            Memory_address++;
             procedureR22();
             break;
         case KEYWORD:
@@ -352,11 +348,15 @@ void Parser::procedureR22() {
     if (!(this->token.type == IDENTIFIER)) {
         logError({"<identifier>"}, this->token.lexeme, this->token.line);
     }
+    
+    save = token;
 
     nextToken();
     if (!(this->token.type == OPERATOR && this->token.lexeme == "=")) {
         logError({"="}, this->token.lexeme, this->token.line);
     }
+
+    gen_instr("POPM", this->token.lexeme ,get_address(save));
 
     nextToken();
     procedureR32();
@@ -539,7 +539,6 @@ void Parser::procedureR31() {
     if (!(this->token.type == OPERATOR && (this->token.lexeme == "==" || this->token.lexeme == "!=" || this->token.lexeme == ">" || this->token.lexeme == "<" || this->token.lexeme == "<=" || this->token.lexeme == "=>"))) {
         logError({"==", "!=", ">", "<", "<=", "=>"}, this->token.lexeme, this->token.line);
     }
-
     return;
 }
 
@@ -558,6 +557,15 @@ void Parser::procedureR33() {
     if (!(this->token.type == OPERATOR && (this->token.lexeme == "+" || this->token.lexeme == "-"))) {
         procedureR38();
         return;
+    }
+
+    save = token;
+
+    if (this->token.lexeme == "+") {
+        gen_instr("ADD", get_address(save));
+    }
+    else if (this->token.lexeme == "-") {
+        gen_instr("SUB", get_address(save));
     }
 
     nextToken();
@@ -582,6 +590,7 @@ void Parser::procedureR35() {
         return;
     }
 
+
     nextToken();
     procedureR36();
     procedureR35();
@@ -594,6 +603,8 @@ void Parser::procedureR36() {
     if (this->token.type == OPERATOR && this->token.lexeme == "-") {
         nextToken();
     }
+
+    
 
     procedureR37();
 }
@@ -652,4 +663,8 @@ void Parser::procedureR37() {
 void Parser::procedureR38() {
     outputFile << "<Empty> ::= <Empty>" << std::endl;
     return;
+}
+
+const int get_address(Token& save) {
+    return Memory_address;
 }

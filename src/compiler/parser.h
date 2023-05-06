@@ -6,11 +6,14 @@
 #include <unordered_map>
 #include "token.h"
 
+int Memory_address = 5000;
+
 class Parser {
     public:
         Parser(std::ofstream &outputFile, std::vector<Token> &tokens);
         ~Parser();
         void parse();
+        std::unordered_map<std::string, int> symbol_table;
     private:
         std::ofstream &outputFile;
         std::vector<Token> &tokens;
@@ -56,5 +59,6 @@ class Parser {
         void procedureR36();
         void procedureR37();
         void procedureR38();
-        std::unordered_map<std::string, int> symbol_table;
+        Token save;
+        int get_address(Token& save);
 };
