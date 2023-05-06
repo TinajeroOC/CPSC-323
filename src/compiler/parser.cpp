@@ -317,6 +317,8 @@ void Parser::procedureR20() {
                 procedureR28();
             } 
             else if (this->token.lexeme == "while") {
+                save = token;
+                instrtab.gen_instr("LABEL", get_address(save), this->token.lexeme);
                 procedureR29();
             }
             break;

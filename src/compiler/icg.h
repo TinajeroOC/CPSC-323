@@ -12,7 +12,7 @@ struct instr {
     std::string id;
     int address;
     std::string type;
-};
+} instrTable;
 
 class SymbolTable {
     public: 
