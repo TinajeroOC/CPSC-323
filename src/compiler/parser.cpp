@@ -355,9 +355,9 @@ void Parser::procedureR22() {
     if (!(this->token.type == OPERATOR && this->token.lexeme == "=")) {
         logError({"="}, this->token.lexeme, this->token.line);
     }
-    SymbolTable symtab;
-    symtab.gen_instr("POPM", get_address(save), this->token.lexeme);
 
+    instrtab.gen_instr("POPM", get_address(save), this->token.lexeme);
+    
     nextToken();
     procedureR32();
 
@@ -536,9 +536,29 @@ void Parser::procedureR30() {
 void Parser::procedureR31() {
     outputFile << "<Relop> ::= == | != | > | < | <= | =>" << std::endl;
 
-    if (!(this->token.type == OPERATOR && (this->token.lexeme == "==" || this->token.lexeme == "!=" || this->token.lexeme == ">" || this->token.lexeme == "<" || this->token.lexeme == "<=" || this->token.lexeme == "=>"))) {
+    if (this->token.lexeme == "==") {
+        instrtab.gen_instr("EQU", get_address(save), this->token.lexeme);
+    }
+    else if (this->token.lexeme == "!=") {
+        instrtab.gen_instr("NEQ", get_address(save), this->token.lexeme);
+    }
+    else if (this->token.lexeme == ">") {
+        instrtab.gen_instr("GRT", get_address(save), this->token.lexeme);
+    }
+    else if (this->token.lexeme == "<") {
+        instrtab.gen_instr("LES", get_address(save), this->token.lexeme);
+    }
+    else if (this->token.lexeme == "<=") {
+        instrtab.gen_instr("LEQ", get_address(save), this->token.lexeme);
+    }
+    else if (this->token.lexeme == "=>") {
+        instrtab.gen_instr("GEQ", get_address(save), this->token.lexeme);
+    }    
+    else {
         logError({"==", "!=", ">", "<", "<=", "=>"}, this->token.lexeme, this->token.line);
     }
+
+
     return;
 }
 
@@ -561,13 +581,11 @@ void Parser::procedureR33() {
 
     save = token;
 
-    SymbolTable symtab;
-
     if (this->token.lexeme == "+") {
-        symtab.gen_instr("ADD", get_address(save), NULL);
+        instrtab.gen_instr("ADD", get_address(save), NULL);
     }
     else if (this->token.lexeme == "-") {
-        symtab.gen_instr("SUB", get_address(save), NULL);
+        instrtab.gen_instr("SUB", get_address(save), NULL);
     }
 
     nextToken();
@@ -592,6 +610,12 @@ void Parser::procedureR35() {
         return;
     }
 
+    if (this->token.lexeme == "*") {
+        instrtab.gen_instr("MUL", get_address(save), this->token.lexeme);
+    }
+    else if (this->token.lexeme == "/") {
+        instrtab.gen_instr("DIV", get_address(save), this->token.lexeme);
+    }
 
     nextToken();
     procedureR36();
@@ -603,6 +627,7 @@ void Parser::procedureR36() {
     outputFile << "<Factor> ::= - <Primary> | <Primary>" << std::endl;
 
     if (this->token.type == OPERATOR && this->token.lexeme == "-") {
+        instrtab.gen_instr("SUB", get_address(save), this->token.lexeme);
         nextToken();
     }
 

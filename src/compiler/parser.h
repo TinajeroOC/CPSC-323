@@ -60,4 +60,5 @@ class Parser {
         void procedureR38();
         Token save;
         int get_address(Token& save);
+        SymbolTable instrtab;
 };

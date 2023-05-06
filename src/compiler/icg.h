@@ -7,7 +7,12 @@
 #include <unordered_map>
 #include "parser.h"
 
-const int instr_address = 5000;
+
+struct instr {
+    std::string id;
+    int address;
+    std::string type;
+};
 
 class SymbolTable {
     public: 
