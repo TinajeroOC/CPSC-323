@@ -355,8 +355,8 @@ void Parser::procedureR22() {
     if (!(this->token.type == OPERATOR && this->token.lexeme == "=")) {
         logError({"="}, this->token.lexeme, this->token.line);
     }
-
-    gen_instr("POPM", this->token.lexeme ,get_address(save));
+    SymbolTable symtab;
+    symtab.gen_instr("POPM", get_address(save), this->token.lexeme);
 
     nextToken();
     procedureR32();
@@ -561,11 +561,13 @@ void Parser::procedureR33() {
 
     save = token;
 
+    SymbolTable symtab;
+
     if (this->token.lexeme == "+") {
-        gen_instr("ADD", get_address(save));
+        symtab.gen_instr("ADD", get_address(save), NULL);
     }
     else if (this->token.lexeme == "-") {
-        gen_instr("SUB", get_address(save));
+        symtab.gen_instr("SUB", get_address(save), NULL);
     }
 
     nextToken();

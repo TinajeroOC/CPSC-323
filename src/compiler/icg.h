@@ -13,7 +13,7 @@ class SymbolTable {
     public: 
         SymbolTable();
         ~SymbolTable();
-        void gen_instr(std::string& op, int& address, std::string oprnd);
+        void gen_instr(std::string op, int address, std::string oprnd);
         std::unordered_map<std::string, int> symbol_table;
     private: 
         
