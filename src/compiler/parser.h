@@ -13,7 +13,6 @@ class Parser {
         Parser(std::ofstream &outputFile, std::vector<Token> &tokens);
         ~Parser();
         void parse();
-        std::unordered_map<std::string, int> symbol_table;
     private:
         std::ofstream &outputFile;
         std::vector<Token> &tokens;
