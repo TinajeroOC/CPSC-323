@@ -1,6 +1,4 @@
 #include "parser.h"
-#include "icg.h"
-
 
 Parser::Parser(std::ofstream &outputFile, std::vector<Token> &tokens) : outputFile(outputFile), tokens(tokens) { }
 
@@ -317,7 +315,7 @@ void Parser::procedureR20() {
                 procedureR28();
             } 
             else if (this->token.lexeme == "while") {
-                instrtab.gen_instr("LABEL", -1);
+                generator.generateInstruction("LABEL", -1);
                 procedureR29();
             }
             break;
@@ -357,7 +355,7 @@ void Parser::procedureR22() {
         logError({"="}, this->token.lexeme, this->token.line);
     }
 
-    instrtab.gen_instr("POPM", get_address(save));
+    generator.generateInstruction("POPM", generator.getSymbolAddress(save.lexeme));
     
     nextToken();
     procedureR32();
@@ -388,7 +386,8 @@ void Parser::procedureR23() {
     }
 
     nextToken();
-    instrtab.back_patch(jump_address);
+    unsigned int jump_address = -1;
+    generator.backPatch(jump_address);
     procedureR20();
 
     nextToken();
@@ -516,8 +515,9 @@ void Parser::procedureR29() {
     }
 
     nextToken();
-    instrtab.gen_instr("JMP", get_address(save));
-    instrtab.back_patch(jump_address);
+    generator.generateInstruction("JMP", generator.getSymbolAddress(save.lexeme));
+    unsigned int jump_address = -1;
+    generator.backPatch(jump_address);
     procedureR20();
 
     nextToken();
@@ -541,22 +541,22 @@ void Parser::procedureR31() {
     outputFile << "<Relop> ::= == | != | > | < | <= | =>" << std::endl;
 
     if (this->token.lexeme == "==") {
-        instrtab.gen_instr("EQU", -1);
+        generator.generateInstruction("EQU", NULL);
     }
     else if (this->token.lexeme == "!=") {
-        instrtab.gen_instr("NEQ", -1);
+        generator.generateInstruction("NEQ", NULL);
     }
     else if (this->token.lexeme == ">") {
-        instrtab.gen_instr("GRT", -1);
+        generator.generateInstruction("GRT", NULL);
     }
     else if (this->token.lexeme == "<") {
-        instrtab.gen_instr("LES", -1);
+        generator.generateInstruction("LES", NULL);
     }
     else if (this->token.lexeme == "<=") {
-        instrtab.gen_instr("LEQ", -1);
+        generator.generateInstruction("LEQ", NULL);
     }
     else if (this->token.lexeme == "=>") {
-        instrtab.gen_instr("GEQ", -1);
+        generator.generateInstruction("GEQ", NULL);
     }    
     else {
         logError({"==", "!=", ">", "<", "<=", "=>"}, this->token.lexeme, this->token.line);
@@ -586,10 +586,10 @@ void Parser::procedureR33() {
     save = token;
 
     if (this->token.lexeme == "+") {
-        instrtab.gen_instr("ADD", -1);
+        generator.generateInstruction("ADD", -1);
     }
     else if (this->token.lexeme == "-") {
-        instrtab.gen_instr("SUB", -1);
+        generator.generateInstruction("SUB", -1);
     }
 
     nextToken();
@@ -615,10 +615,10 @@ void Parser::procedureR35() {
     }
 
     if (this->token.lexeme == "*") {
-        instrtab.gen_instr("MUL", -1);
+        generator.generateInstruction("MUL", -1);
     }
     else if (this->token.lexeme == "/") {
-        instrtab.gen_instr("DIV", -1);
+        generator.generateInstruction("DIV", -1);
     }
 
     nextToken();
@@ -631,7 +631,7 @@ void Parser::procedureR36() {
     outputFile << "<Factor> ::= - <Primary> | <Primary>" << std::endl;
 
     if (this->token.type == OPERATOR && this->token.lexeme == "-") {
-        instrtab.gen_instr("SUB", -1);
+        generator.generateInstruction("SUB", -1);
         nextToken();
     }
 
@@ -694,8 +694,4 @@ void Parser::procedureR37() {
 void Parser::procedureR38() {
     outputFile << "<Empty> ::= <Empty>" << std::endl;
     return;
-}
-
-int Parser::get_address(Token& save) {
-    return Memory_address;
 }

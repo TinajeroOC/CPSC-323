@@ -5,9 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include "token.h"
-#include "icg.h"
-
-int Memory_address = 5000;
+#include "ocg.h"
 
 class Parser {
     public:
@@ -18,7 +16,8 @@ class Parser {
         std::ofstream &outputFile;
         std::vector<Token> &tokens;
         std::vector<Token>::iterator itr;
-        Token token;
+        Token token, save;
+        ObjectCodeGenerator generator;
         void logError(const std::vector<std::string> &expected, const std::string &lexeme, const int &line);
         bool nextToken();
         void procedureR1();
@@ -59,7 +58,4 @@ class Parser {
         void procedureR36();
         void procedureR37();
         void procedureR38();
-        Token save;
-        int get_address(Token& save);
-        SymbolTable instrtab;
 };
