@@ -15,6 +15,12 @@ struct Token {
     TokenType type;
     std::string lexeme;
     int line;
+
+    Token& operator=(const Token &rhs) {
+        type = rhs.type;
+        lexeme = rhs.lexeme;
+        return *this;
+    }
 };
 
 std::string tokenTypeString(const TokenType &type);
