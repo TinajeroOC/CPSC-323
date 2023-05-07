@@ -5,16 +5,17 @@ ObjectCodeGenerator::ObjectCodeGenerator() { }
 ObjectCodeGenerator::~ObjectCodeGenerator() { }
 
 void ObjectCodeGenerator::generateInstruction(const std::string &operation, const unsigned int &operand) {
-    instructionTable[memoryAddressCounter].address = instructionTable.size() + 1;
-    instructionTable[memoryAddressCounter].operation = operation;
-    instructionTable[memoryAddressCounter].operand = operand;
-    memoryAddressCounter++;
+    instructionTable[instructionAddressCounter].address = instructionAddressCounter;
+    instructionTable[instructionAddressCounter].operation = operation;
+    instructionTable[instructionAddressCounter].operand = operand;
+    instructionAddressCounter++;
 }
 
 void ObjectCodeGenerator::insertSymbol(const unsigned int &address, const std::string &identifier, const std::string &type) {
-    symbolTable[identifier].address = address;
+    symbolTable[identifier].address = symbolAddressCounter;
     symbolTable[identifier].identifier = identifier;
     symbolTable[identifier].type = type;
+    symbolAddressCounter++;
 }
 
 unsigned int ObjectCodeGenerator::getSymbolAddress(const std::string &identifier) {

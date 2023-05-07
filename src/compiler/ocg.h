@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <unordered_map>
+#include <map>
 #include <stack>
 
 struct Instruction {
@@ -32,8 +33,9 @@ class ObjectCodeGenerator {
         void writeInstructionTableToFile(std::ofstream &outputFile);
         void writeSymbolTableToFile(std::ofstream &outputFile);
     private:
-        unsigned int memoryAddressCounter = 5000;
-        std::unordered_map<unsigned int, Instruction> instructionTable;
+        unsigned int instructionAddressCounter = 1;
+        unsigned int symbolAddressCounter = 5000;
+        std::map<unsigned int, Instruction> instructionTable;
         std::unordered_map<std::string, Symbol> symbolTable;
         std::stack<unsigned int> jumpStack;
 };

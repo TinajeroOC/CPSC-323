@@ -8,6 +8,7 @@ void Parser::parse() {
     this->itr = this->tokens.begin();
     this->token = *this->itr;
     outputFile << "Token: " + tokenTypeString(this->token.type) + " Lexeme: " + this->token.lexeme << std::endl;
+    
     procedureR1();
 
     generator.writeInstructionTableToFile(outputFile);
