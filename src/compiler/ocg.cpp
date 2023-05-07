@@ -4,23 +4,37 @@ ObjectCodeGenerator::ObjectCodeGenerator() { }
 
 ObjectCodeGenerator::~ObjectCodeGenerator() { }
 
+void ObjectCodeGenerator::queueSymbol(const std::string &identifier) {
+    queuedSymbols.push_back(identifier);
+}
+
+std::vector<std::string> ObjectCodeGenerator::getQueuedSymbols() {
+    return queuedSymbols;
+}
+
+void ObjectCodeGenerator::clearQueuedSymbols() {
+    queuedSymbols.clear();
+}
+
 void ObjectCodeGenerator::generateInstruction(const std::string &operation, const unsigned int &operand) {
-    instructionTable[instructionAddressCounter].address = instructionAddressCounter;
-    instructionTable[instructionAddressCounter].operation = operation;
-    instructionTable[instructionAddressCounter].operand = operand;
+    Instruction instruction = {instructionAddressCounter, operation, operand};
+    instructionTable[instructionAddressCounter] = instruction;
     instructionAddressCounter++;
 }
 
-void ObjectCodeGenerator::insertSymbol(const unsigned int &address, const std::string &identifier, const std::string &type) {
-    symbolTable[identifier].address = symbolAddressCounter;
-    symbolTable[identifier].identifier = identifier;
-    symbolTable[identifier].type = type;
+void ObjectCodeGenerator::insertSymbol(const std::string &identifier, const std::string &type) {
+    if (existsSymbol(identifier)) {
+        throw std::runtime_error("Object Code Generation Error: Symbol '" + identifier + "' already exists.");
+    }
+    
+    Symbol symbol = {symbolAddressCounter, identifier, type};
+    symbolTable[identifier] = symbol;
     symbolAddressCounter++;
 }
 
 unsigned int ObjectCodeGenerator::getSymbolAddress(const std::string &identifier) {
     if (!existsSymbol(identifier)) {
-        throw std::runtime_error("Object Code Generation Error: Symbol '" + identifier + "' does not exist");
+        throw std::runtime_error("Object Code Generation Error: Symbol '" + identifier + "' does not exist.");
     }
     return symbolTable[identifier].address;
 }

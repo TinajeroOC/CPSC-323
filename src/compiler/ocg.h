@@ -25,7 +25,10 @@ class ObjectCodeGenerator {
         ObjectCodeGenerator();
         ~ObjectCodeGenerator();
         void generateInstruction(const std::string &operation, const unsigned int &operand);
-        void insertSymbol(const unsigned int &address, const std::string &identifier, const std::string &type);
+        void queueSymbol(const std::string &identifier);
+        std::vector<std::string> getQueuedSymbols();
+        void clearQueuedSymbols();
+        void insertSymbol(const std::string &identifier, const std::string &type);
         unsigned int getSymbolAddress(const std::string &identifier);
         bool existsSymbol(const std::string &identifier);
         void backPatch(unsigned int& jumpAddress);
@@ -37,5 +40,6 @@ class ObjectCodeGenerator {
         unsigned int symbolAddressCounter = 5000;
         std::map<unsigned int, Instruction> instructionTable;
         std::unordered_map<std::string, Symbol> symbolTable;
+        std::vector<std::string> queuedSymbols;
         std::stack<unsigned int> jumpStack;
 };

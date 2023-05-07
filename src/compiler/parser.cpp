@@ -211,6 +211,12 @@ void Parser::procedureR13() {
     outputFile << "<Declaration List> ::= <Declaration> | <Declaration'>" << std::endl;
 
     procedureR15();
+    
+    auto queued = generator.getQueuedSymbols();
+    for (auto itr = queued.begin(); itr != queued.end(); itr++) {
+        generator.insertSymbol(*itr, tokenTypeString(save.type));
+    }
+    generator.clearQueuedSymbols();
 
     if (!(this->token.type == SEPARATOR && this->token.lexeme == ";")) {
         logError({";"}, this->token.lexeme, this->token.line);
@@ -237,6 +243,8 @@ void Parser::procedureR15() {
     outputFile << "<Declaration> ::= <Qualifier> <IDs>;" << std::endl;
 
     procedureR10();
+    save = token;
+
     nextToken();
     procedureR16();
 }
@@ -248,6 +256,8 @@ void Parser::procedureR16() {
     if (!(this->token.type == IDENTIFIER)) {
         logError({"identifier"}, this->token.lexeme, this->token.line);
     }
+    generator.queueSymbol(this->token.lexeme);
+
     nextToken();
     procedureR17();
 }
