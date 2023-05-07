@@ -1,12 +1,11 @@
 #pragma once
-#include <map>
 #include <string>
 #include <vector>
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <unordered_map>
 #include <stack>
-#include "parser.h"
 
 struct Instruction {
     unsigned int address;
@@ -30,6 +29,8 @@ class ObjectCodeGenerator {
         bool existsSymbol(const std::string &identifier);
         void backPatch(unsigned int& jumpAddress);
         unsigned int popJumpstack();
+        void writeInstructionTableToFile(std::ofstream &outputFile);
+        void writeSymbolTableToFile(std::ofstream &outputFile);
     private:
         unsigned int memoryAddressCounter = 5000;
         std::unordered_map<unsigned int, Instruction> instructionTable;
