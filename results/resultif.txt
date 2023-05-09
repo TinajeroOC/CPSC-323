@@ -1,0 +1,270 @@
+Output:
+-------
+token                         lexeme
+------------------------------------
+separator                          #
+keyword                          int
+identifier                         a
+separator                          ,
+identifier                         b
+separator                          ,
+identifier                         c
+separator                          ;
+separator                          #
+identifier                         a
+operator                           =
+integer                            1
+separator                          ;
+identifier                         b
+operator                           =
+integer                            2
+separator                          ;
+identifier                         c
+operator                           =
+integer                            3
+separator                          ;
+keyword                          get
+separator                          (
+identifier                         c
+separator                          )
+separator                          ;
+keyword                           if
+separator                          (
+identifier                         a
+operator                           <
+identifier                         c
+separator                          )
+separator                          {
+identifier                         a
+operator                           =
+identifier                         b
+operator                           +
+identifier                         c
+separator                          ;
+separator                          }
+keyword                           fi
+keyword                          put
+separator                          (
+identifier                         a
+operator                           +
+identifier                         c
+separator                          )
+separator                          ;
+keyword                          get
+separator                          (
+identifier                         b
+separator                          )
+separator                          ;
+------------------------------------
+Token: separator Lexeme: #
+<Rat23S> ::= <Opt Function Definitions> # <Opt Declaration List> # <Statement List>
+<Opt Function Definitions> ::= <Function Definitions> | <Empty>
+<Empty> ::= <Empty>
+Token: keyword Lexeme: int
+<Opt Declaration List> ::= <Declaration List> | <Empty>
+<Declaration List> ::= <Declaration> | <Declaration'>
+<Declaration> ::= <Qualifier> <IDs>;
+<Qualifier> ::= int | bool | real
+Token: identifier Lexeme: a
+<IDs> ::= <Identifier> <IDs'>
+Token: separator Lexeme: ,
+<IDs'> ::= <Empty> | , <IDs>
+Token: identifier Lexeme: b
+<IDs> ::= <Identifier> <IDs'>
+Token: separator Lexeme: ,
+<IDs'> ::= <Empty> | , <IDs>
+Token: identifier Lexeme: c
+<IDs> ::= <Identifier> <IDs'>
+Token: separator Lexeme: ;
+<IDs'> ::= <Empty> | , <IDs>
+<Empty> ::= <Empty>
+Token: separator Lexeme: #
+<Declaration'> ::= <Empty> | <Declaration List>
+<Empty> ::= <Empty>
+Token: identifier Lexeme: a
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Assign> ::= <Identifier> = <Expression> ;
+Token: operator Lexeme: =
+Token: integer Lexeme: 1
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: separator Lexeme: ;
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+Token: identifier Lexeme: b
+<Statement'> ::= <Empty> | <Statement List>
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Assign> ::= <Identifier> = <Expression> ;
+Token: operator Lexeme: =
+Token: integer Lexeme: 2
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: separator Lexeme: ;
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+Token: identifier Lexeme: c
+<Statement'> ::= <Empty> | <Statement List>
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Assign> ::= <Identifier> = <Expression> ;
+Token: operator Lexeme: =
+Token: integer Lexeme: 3
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: separator Lexeme: ;
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+Token: keyword Lexeme: get
+<Statement'> ::= <Empty> | <Statement List>
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Scan> ::= get ( <IDs> ) ;
+Token: separator Lexeme: (
+Token: identifier Lexeme: c
+<IDs> ::= <Identifier> <IDs'>
+Token: separator Lexeme: )
+<IDs'> ::= <Empty> | , <IDs>
+<Empty> ::= <Empty>
+Token: separator Lexeme: ;
+Token: keyword Lexeme: if
+<Statement'> ::= <Empty> | <Statement List>
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<If> ::= if ( <Condition> ) <Statement> <If'>
+Token: separator Lexeme: (
+Token: identifier Lexeme: a
+<Condition> ::= <Expression> <Relop> <Expression>
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: operator Lexeme: <
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+<Relop> ::= == | != | > | < | <= | =>
+Token: identifier Lexeme: c
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: separator Lexeme: )
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+Token: separator Lexeme: {
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Compound> ::= { <Statement List> }
+Token: identifier Lexeme: a
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Assign> ::= <Identifier> = <Expression> ;
+Token: operator Lexeme: =
+Token: identifier Lexeme: b
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: operator Lexeme: +
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+Token: identifier Lexeme: c
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: separator Lexeme: ;
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+Token: separator Lexeme: }
+<Statement'> ::= <Empty> | <Statement List>
+<Empty> ::= <Empty>
+Token: keyword Lexeme: fi
+<If'> ::= fi | else <Statement> fi
+Token: keyword Lexeme: put
+<Statement'> ::= <Empty> | <Statement List>
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Print> ::= put ( <Expression> ) ;
+Token: separator Lexeme: (
+Token: identifier Lexeme: a
+<Expression> ::= <Term> <Expression'>
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: operator Lexeme: +
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+Token: identifier Lexeme: c
+<Term> ::= <Factor> <Term'>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+Token: separator Lexeme: )
+<Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+<Empty> ::= <Empty>
+<Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+<Empty> ::= <Empty>
+Token: separator Lexeme: ;
+Token: keyword Lexeme: get
+<Statement'> ::= <Empty> | <Statement List>
+<Statement List> ::= <Statement> <Statement'>
+<Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Scan> ::= get ( <IDs> ) ;
+Token: separator Lexeme: (
+Token: identifier Lexeme: b
+<IDs> ::= <Identifier> <IDs'>
+Token: separator Lexeme: )
+<IDs'> ::= <Empty> | , <IDs>
+<Empty> ::= <Empty>
+Token: separator Lexeme: ;
+Address        Operation         Operand
+----------------------------------------
+1                  PUSHI               1
+2                   POPM            5000
+3                  PUSHI               2
+4                   POPM            5001
+5                  PUSHI               3
+6                   POPM            5002
+7                     IN                
+8                   POPM            5002
+9                  PUSHM            5000
+10                 PUSHM            5002
+11                   LES                
+12                  JMPZ              17
+13                 PUSHM            5001
+14                 PUSHM            5002
+15                   ADD                
+16                  POPM            5000
+17                 LABEL                
+18                 PUSHM            5000
+19                 PUSHM            5002
+20                   ADD                
+21                   OUT                
+22                    IN                
+23                  POPM            5001
+----------------------------------------
+Identifier      MemoryLocation           Type
+---------------------------------------------
+a                         5000            int
+b                         5001            int
+c                         5002            int
+---------------------------------------------

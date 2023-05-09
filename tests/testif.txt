@@ -1,0 +1,14 @@
+[*Test case < 20 lines*]
+#
+int a, b, c;
+#
+a = 1;
+b = 2;
+c = 3;
+get (c);
+if (a < c) {
+a = b + c;
+}
+fi
+put (a + c);
+get (b);
