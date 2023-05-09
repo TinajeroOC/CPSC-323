@@ -548,6 +548,7 @@ void Parser::procedureR29() {
 
     generator.insertInstruction("JMP", labelAddress);
     generator.backPatch();
+    generator.insertInstruction("LABEL", 0);
 
     nextToken();
     if (!(token.type == KEYWORD && token.lexeme == "endwhile")) {
