@@ -19,6 +19,7 @@ struct Token {
     Token& operator=(const Token &rhs) {
         type = rhs.type;
         lexeme = rhs.lexeme;
+        line = rhs.line;
         return *this;
     }
 };
